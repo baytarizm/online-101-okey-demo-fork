@@ -91,7 +91,7 @@ test('opening uses server score and sends remaining tiles only to owner',async t
   const service=await setup(t),{players,room}=await service.table({stackingMode:true});const i=room.game.currentPlayer,s=players[i].socket;
   room.game.okey={color:'Siyah',number:1};
   const sets=[10,11,13].map(n=>['Mavi','Kirmizi','Yesil'].map(c=>tile(c,n)));
-  const spare=tile('Siyah',9);room.game.playerTiles[i]=[...sets.flat(),spare];
+  const spare={...tile('Siyah',9),id:'private-spare-fixture'};room.game.playerTiles[i]=[...sets.flat(),spare];
   const own=event(s,'state'),opponent=event(players[(i+1)%4].socket,'state');
   s.emit('openHand',{groups:sets.map(g=>g.map(t=>t.id)),score:9999});const state=await own,other=await opponent;
   assert.equal(state.playerState.openScore,102);assert.equal(state.minimumOpenScore,103);assert.deepEqual(state.tiles,[spare]);assert(!JSON.stringify(other.tiles).includes(spare.id));assert(!('remainingTiles' in other));

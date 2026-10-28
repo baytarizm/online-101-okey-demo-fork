@@ -71,3 +71,11 @@ Ana ekranda **Botlarla oyna** tek insan + üç botla hemen masayı açar. **Arka
 Botlar sunucuda çalışır ve insanlarla aynı sıra, çekme, açma, işleme ve atma doğrulamalarını kullanır. Kendi elleri ve masanın açık bilgileriyle sınırlı basit bir strateji kullanır; diğer oyuncuların ellerini ve yığının sırasını görmezler. Ortadan çeker, uygun seri/per veya beş çiftle açar, masaya taş işler ve atar. İleri seviye rakip olarak tasarlanmamıştır.
 
 Bot sıraları yaklaşık bir saniye arayla oynanır. İnsanlardan biri koparsa botlar da durur; yeniden bağlanınca devam ederler. Masada insan kalmazsa otomatik oyun sürmez; normal masa temizleme süresi geçerlidir. Yeni eli masa sahibi başlatır.
+
+## Masa yerleşimi ve ıstaka
+
+Oyuncular kendi bakış açılarına göre karşı/sol/sağ/alt koltuklarda görünür. Açılan gruplar, sahibinin adıyla ayrılmış dört masa alanında herkese gösterilir; son atışlar masa kenarlarındadır. Kendi atış alanınız sağ alttaki **SAĞA AT** alanıdır.
+
+**Seri diz**, geçerli seri/perleri; **Çift diz**, aynı taş çiftlerini ayırır ve aralarında bir taş boşluğu bırakır. Eşleşmeyen taşlar ayrı tutulur. Bu işlem yalnızca ıstakayı düzenler, otomatik el açmaz. Her per tek rafta tutulur. Gerçek ve sahte okey mevcut masa kurallarıyla değerlendirilir.
+
+Taşlar fare veya dokunmatik pointer hareketiyle sağdaki alana bırakılarak atılabilir; sıra ve çekme kontrolleri sunucuda korunur. Dokunup seçme ve **Seçili taşı at** düğmesi de kullanılabilir. Istaka içinde sürüklemek elle sıralamayı sağlar.

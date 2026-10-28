@@ -207,3 +207,88 @@ dialog button { margin: 12px 5px 0 0; }
 .friend-button { width: 100%; margin-top: 9px; font-size: 12px; }
 .waiting #startWithBots { display: block; width: 100%; margin: 18px 0 9px; font-size: 12px; }
 .waiting #leave { margin-top: 7px; }
+
+/* Seated table: left player, opposite player, right player, then your rack. */
+#tableApp { max-width: 1200px; padding-inline: 14px; }
+#playArea { padding: 12px; }
+.table-arena { position: relative; padding: 52px 0 48px; }
+.table-arena .players { display: contents; }
+.table-arena .player { position: absolute; z-index: 3; width: 142px; background: #123328f2; }
+.player[data-seat="0"] { bottom: 0; left: 50%; transform: translateX(-50%); }
+.player[data-seat="2"] { top: 0; left: 50%; transform: translateX(-50%); }
+.player[data-seat="3"] { left: 0; top: 42%; }
+.player[data-seat="1"] { right: 0; top: 42%; }
+.table-arena .felt { min-height: 370px; max-height: none; margin: 0; padding: 22px 155px; overflow: visible; border-radius: 65px; }
+.felt-brand { opacity: .1; }
+.table-groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.owner-groups { min-width: 0; padding: 9px; border: 1px solid #dcca9e35; border-radius: 9px; background: #102e2299; min-height: 145px; }
+.owner-groups[data-seat="2"] { grid-area: 1 / 2; }
+.owner-groups[data-seat="3"] { grid-area: 1 / 1; }
+.owner-groups[data-seat="0"] { grid-area: 2 / 1; }
+.owner-groups[data-seat="1"] { grid-area: 2 / 2; }
+.owner-groups h3 { margin: 0 0 8px; color: #dac798; font-size: 10px; font-weight: 500; overflow-wrap: anywhere; }
+.owner-melds { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 9px 7px; }
+.table-group { padding: 0 0 2px; border: 0; border-radius: 2px; background: none; }
+.group-tiles { gap: 1px; }
+.no-melds { font-size: 9px; color: #a4b29b80; }
+.seat-discard { position: absolute; width: 120px; display: flex; align-items: center; flex-direction: column; gap: 5px; z-index: 2; }
+.seat-discard small { font-size: 8px; color: #d1c6aa; text-align: center; }
+.seat-discard[data-seat="3"] { left: 9px; bottom: 77px; }
+.seat-discard[data-seat="2"] { left: 27px; top: 74px; }
+.seat-discard[data-seat="1"] { right: 12px; top: 74px; }
+.discard-empty { color: #b7c4a66b; font-size: 19px; }
+.discard-zone { position: absolute; z-index: 4; right: 10px; bottom: 55px; width: 122px; min-height: 96px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px dashed #c9b78070; border-radius: 12px; background: #123126e6; color: #decca6; }
+.discard-zone > span:first-child { font-size: 10px; letter-spacing: .1em; }
+.discard-zone small { font-size: 8px; }
+.discard-zone:disabled { opacity: .65; }
+.discard-zone.ready { border-color: #e0bd77; background: #385239; }
+.discard-zone.drag-over { outline: 3px solid #f7dca0; background: #6b7337; box-shadow: 0 0 25px #e5d38b50; }
+#rightTile:empty { display: none; }
+.rack-section { max-width: 900px; margin-top: 6px; }
+.rack { --rack-columns: 16; grid-template-columns: repeat(var(--rack-columns),var(--tile-w)); grid-template-rows: repeat(2,var(--tile-h)); column-gap: 2px; justify-content: safe center; }
+.rack .tile { touch-action: none; }
+.drag-ghost { position: fixed; z-index: 1000; transform: translate(-50%,-65%) rotate(-5deg); pointer-events: none; opacity: .95; box-shadow: 0 12px 20px #0008; }
+.drag-source { opacity: .25; }
+@media (max-width: 900px) {
+  .table-arena .felt { padding-inline: 107px; }
+  .table-arena .player { width: 100px; grid-template-columns: 23px 1fr; gap: 4px; padding: 7px 5px; }
+  .player-initial { width: 23px; height: 23px; }
+  .player strong { font-size: 9px; }.player small { font-size: 8px; }
+  .discard-zone { width: 88px; right: 7px; }
+  .seat-discard { width: 90px; }.seat-discard[data-seat="2"] { left: 8px; }
+  :root { --tile-w: clamp(24px,calc((100vw - 90px) / 17),42px); --tile-h: calc(var(--tile-w) * 1.48); }
+}
+@media (max-width: 600px) {
+  #tableApp { padding: 7px 4px 12px; } #playArea { padding: 8px 4px; }
+  .table-meta { padding-inline: 3px; }
+  .table-arena { padding: 44px 0 43px; }
+  .table-arena .player { width: 72px; display: flex; flex-direction: column; gap: 1px; padding: 4px 2px; border-radius: 7px; }
+  .player-initial { width: 20px; height: 20px; font-size: 10px; }
+  .player strong { font-size: 8px; }.player small { font-size: 7px; }
+  .player[data-seat="0"],.player[data-seat="2"] { width: 125px; display: grid; grid-template-columns: 23px 1fr; text-align: left; column-gap: 5px; padding: 4px 7px; }
+  .table-arena .felt { min-height: 330px; padding: 14px 73px; border-width: 4px; border-radius: 40px; }
+  .table-groups { gap: 5px; }
+  .owner-groups { padding: 5px 3px; min-height: 147px; }
+  .owner-groups h3 { font-size: 8px; margin-bottom: 7px; }
+  .owner-melds { gap: 8px 4px; }
+  .table-group .tile.mini { --tile-w: 15px; --tile-h: 23px; border-radius: 2px; }
+  .table-group .mini .tile-number { font-size: 12px; letter-spacing: -.6px; }
+  .table-group .mini .tile-dot { font-size: 5px; margin-top: 1px; }
+  .no-melds { font-size: 7px; }
+  .seat-discard { width: 65px; }.seat-discard small { font-size: 7px; }
+  .seat-discard[data-seat="3"] { left: 2px; bottom: 67px; }
+  .seat-discard[data-seat="2"] { left: 4px; top: 65px; }
+  .seat-discard[data-seat="1"] { right: 4px; top: 65px; }
+  .discard-zone { width: 64px; min-height: 91px; right: 2px; bottom: 58px; padding: 5px 2px; border-radius: 8px; }
+  .discard-zone > span:first-child { font-size: 8px; }.discard-zone small { font-size: 7px; line-height: 1.5; }
+  .rack-section { padding-inline: 3px; }.rack-head { padding-inline: 3px; }
+  :root { --tile-w: clamp(17px,calc((100vw - 68px) / 17),29px); --tile-h: calc(var(--tile-w) * 1.48); }
+  .rack { justify-content: safe center; padding: 9px 1px 6px; }
+  .rack .tile-number { font-size: calc(var(--tile-w) * .77); letter-spacing: -.8px; }
+  .rack .tile-dot { font-size: 7px; margin-top: 2px; }
+  .rack .tile { border-radius: 3px; }
+  .turn-line { padding-inline: 3px; }.draw-actions { margin-top: 3px; padding-inline: 3px; }
+}
+@media (max-height: 550px) and (orientation: landscape) {
+  .table-arena .felt { min-height: 250px; }.owner-groups { min-height: 105px; }
+}
