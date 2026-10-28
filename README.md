@@ -26,7 +26,7 @@ npm start
 - Sıranızda önce ortadan/solunuzdan çekin, sonra tek taş seçip atın. Yerden aldığınız taşı ilk açılışta kullanmanız gerekir. Bir atış taşı bırakın; son taşı atınca el biter.
 - Normal bitiş −101, okey veya çift bitiş −202, çift ve okey bitişi −404. Diğer puanlar upstream'in `calculatePoints` kurallarıdır. Elden bitiş için ayrı çarpan bu sürümde uygulanmaz. Yığın bitince el puansız kapanır. Yazboz’un manuel 100 puan “Bitti” indirimi ayrı özelliktir; online masayla karıştırılmaz.
 - Skorlar masada elden ele toplanır. Yeni eli masa sahibi dört kişi bağlıyken başlatır.
-- Bot, sohbet, para/bahis veya herkese açık eşleştirme yoktur.
+- Sohbet, para/bahis veya herkese açık eşleştirme yoktur.
 
 ## Güvenlik ve bağlantı
 
@@ -62,3 +62,12 @@ Upstream README’de MIT rozeti, package.json’da ISC tanımı var; upstream ay
 - `public/asset/animal-health-lounge.webp`: bu proje için yerleşik ImageGen ile üretilen 1536 × 1024 px ambiyans görselinin 146 KB WebP sürümü. Kısa üretim özeti: sığır/koyun/keçi/kanatlı duvar panoları, stetoskop ve saha defteri, ahşap ve pirinç ayrıntılar, çaylı sıcak veteriner kahvehanesi; oyun üstüne bineceği için orta alan sakin ve koyu yeşil, görsel üzerinde yazı veya oyun arayüzü yok.
 - `public/asset/animal-health-mark.svg`: özgün sığır, koyun ve kanatlı çizgisel masa filigranı. Resmî kurum logosu değildir.
 - Masa ve lobi aynı ambiyansı kullanır. Taşlar, sayılar, düğmeler ve tüm oyun bilgileri gerçek HTML/CSS olarak kalır.
+
+
+## Botlarla oyun
+
+Ana ekranda **Botlarla oyna** tek insan + üç botla hemen masayı açar. **Arkadaş masası kur** normal bekleme lobisini açar; masa sahibi **Boş yerleri botlarla doldur** ile bir veya iki arkadaşıyla da başlayabilir. Botlar başladığı el boyunca sandalyelerini korur; devam eden oyuna insan oyuncu yerleştirilmez.
+
+Botlar sunucuda çalışır ve insanlarla aynı sıra, çekme, açma, işleme ve atma doğrulamalarını kullanır. Kendi elleri ve masanın açık bilgileriyle sınırlı basit bir strateji kullanır; diğer oyuncuların ellerini ve yığının sırasını görmezler. Ortadan çeker, uygun seri/per veya beş çiftle açar, masaya taş işler ve atar. İleri seviye rakip olarak tasarlanmamıştır.
+
+Bot sıraları yaklaşık bir saniye arayla oynanır. İnsanlardan biri koparsa botlar da durur; yeniden bağlanınca devam ederler. Masada insan kalmazsa otomatik oyun sürmez; normal masa temizleme süresi geçerlidir. Yeni eli masa sahibi başlatır.

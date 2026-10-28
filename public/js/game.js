@@ -64,15 +64,17 @@ function scoreRows(container) {
 function render() {
   $('waiting').hidden=state.phase!=='lobby'; $('playArea').hidden=state.phase==='lobby';
   $('waitingCode').textContent=state.roomCode;
+  $('startWithBots').hidden=state.phase!=='lobby' || !state.host;
+  $('startWithBots').disabled=!socket.connected || state.players.some(p=>!p.connected);
   $('waitingStatus').textContent=state.players.length+'/4 oyuncu · Dördüncü oyuncu geldiğinde el başlar.';
-  $('waitingPlayers').replaceChildren(...Array.from({length:4},(_,i)=>element('div','waiting-player',state.players[i]?(state.players[i].name+(state.players[i].connected?' · Hazır':' · Bağlantı bekleniyor')):'Boş sandalye')));
+  $('waitingPlayers').replaceChildren(...Array.from({length:4},(_,i)=>element('div','waiting-player',state.players[i]?(state.players[i].name+(state.players[i].isBot?' · Bot':state.players[i].connected?' · Hazır':' · Bağlantı bekleniyor')):'Boş sandalye')));
   if(state.phase==='lobby')return;
   $('roundInfo').textContent=state.round+'. el · '+state.roomCode+(state.teamMode?' · Eşli':' · Tekli');
   $('pileInfo').textContent='Yığında '+state.pileCount+' taş';
   $('indicatorInfo').replaceChildren(element('span','','Gösterge '),tileButton(state.indicator,true),element('span','',' Okey '),tileButton({...state.okey,isFakeJoker:false},true));
   $('players').replaceChildren(...state.players.map((p,i)=>{
     const box=element('div','player'+(i===state.currentPlayer?' current':'')+(p.connected?'':' offline'));
-    box.append(element('span','player-initial',p.name.slice(0,1).toLocaleUpperCase('tr')),element('strong','',p.name+(i===state.playerIndex?' (Sen)':'')),element('small','',p.connected?p.tileCount+' taş'+(p.hasOpened?' · Açtı':''):'Bağlantı kesildi'));
+    box.append(element('span','player-initial',p.name.slice(0,1).toLocaleUpperCase('tr')),element('strong','',p.name+(i===state.playerIndex?' (Sen)':'')),element('small','',p.connected?p.tileCount+' taş'+(p.isBot?' · Bot':'')+(p.hasOpened?' · Açtı':''):'Bağlantı kesildi'));
     if(state.teamMode)box.append(element('small','','Takım '+p.team));return box;
   }));
   let count=0;
@@ -119,6 +121,7 @@ $('invite').onclick=async()=>{
   catch(error){if(error.name!=='AbortError')message('Davet kodu: '+session.roomCode+' · '+link);}
 };
 $('rules').onclick=()=>$('rulesDialog').showModal();$('closeRules').onclick=()=>$('rulesDialog').close();
+$('startWithBots').onclick=()=>socket.emit('startWithBots',{});
 $('leave').onclick=()=>socket.emit('leaveRoom',{});
 $('newRound').onclick=()=>socket.emit('newRound',{});$('closeResult').onclick=()=>$('resultDialog').close();
 if(session)socket.connect();

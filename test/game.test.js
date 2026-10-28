@@ -125,3 +125,59 @@ test('health and HTML are served with security headers',async t=>{
   const service=await setup(t);const r=await fetch(service.url+'/health');assert.equal(r.status,200);assert.equal((await r.json()).service,'HAYSAG OKEY');assert.match(r.headers.get('content-security-policy'),/default-src 'self'/);
   const html=await (await fetch(service.url+'/')).text();assert(html.includes('HAYSAG OKEY'));
 });
+
+function matchingState(socket,predicate) {
+  return new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>{socket.off('state',check);reject(Error('Bot state timeout'));},5000);
+    function check(state){if(predicate(state)){clearTimeout(timer);socket.off('state',check);resolve(state);}}
+    socket.on('state',check);
+  });
+}
+test('one human can immediately start with three clearly identified bots',async t=>{
+  const service=await setup(t,{botDelay:100000}),player=await service.join('Tek oyuncu',null,{withBots:true,teamMode:true});
+  assert.equal(player.state.phase,'playing');assert.equal(player.state.players.length,4);
+  assert.equal(player.state.players.filter(p=>p.isBot).length,3);assert(player.state.players.every(p=>p.connected));
+  assert(!JSON.stringify(player.state).includes('tokenHash'));
+  const room=service.rooms.get(player.session.roomCode);assert.equal(room.players.filter(p=>p.socketId).length,1);
+});
+test('only the lobby host can fill empty chairs; two friends can start with two bots',async t=>{
+  const service=await setup(t,{botDelay:100000}),host=await service.join('Ev sahibi'),guest=await service.join('Arkadaş',host.session.roomCode);
+  let p=event(guest.socket,'gameError');guest.socket.emit('startWithBots',{});assert.match((await p).message,/masa sahibi/);
+  p=matchingState(host.socket,s=>s.phase==='playing');host.socket.emit('startWithBots',{});const state=await p;
+  assert.equal(state.players.filter(p=>p.isBot).length,2);assert.equal(state.players[1].name,'Arkadaş');
+  p=event(host.socket,'gameError');host.socket.emit('startWithBots',{});await p;
+  assert.equal(service.rooms.get(host.session.roomCode).players.length,4);
+});
+test('bots draw and discard automatically, return the turn, and conserve all 106 tiles',async t=>{
+  const service=await setup(t,{botDelay:20}),host=await service.join('İnsan',null,{withBots:true});
+  const room=service.rooms.get(host.session.roomCode),g=room.game;g.currentPlayer=1;g.hasDrawn=false;
+  const result=matchingState(host.socket,s=>s.currentPlayer===0 || s.phase==='finished');host.socket.emit('resume',host.session);await result;
+  const all=[g.indicator,...g.tiles,...g.playerTiles.flat(),...g.discardPiles.flat(),...g.playerStates.flatMap(s=>s.openedGroups.flat())];
+  assert.equal(all.length,106);assert.equal(new Set(all.map(t=>t.id)).size,106);assert(g.discardPiles[1].length>0);
+});
+for(const pairs of [false,true])test('bot legally opens '+(pairs?'five pairs':'101 points')+' and can finish the round',async t=>{
+  const service=await setup(t,{botDelay:30}),host=await service.join('İnsan',null,{withBots:true});const room=service.rooms.get(host.session.roomCode),g=room.game;
+  g.currentPlayer=1;g.hasDrawn=true;g.okey={color:'Siyah',number:1};
+  const groups=pairs?[2,3,4,6,7].map(n=>[tile('Mavi',n),tile('Mavi',n,1)]):[10,11,13].map(n=>['Mavi','Kirmizi','Yesil'].map(c=>tile(c,n)));
+  g.playerTiles[1]=[...groups.flat(),tile('Siyah',9)];
+  const result=matchingState(host.socket,s=>s.phase==='finished');host.socket.emit('resume',host.session);const state=await result;
+  assert.equal(state.result.winner,room.players[1].name);assert.equal(state.openedGroups[1].length,groups.length);assert.equal(g.playerTiles[1].length,0);
+  assert.equal(state.scores.player1,pairs?-202:-101);
+  const next=matchingState(host.socket,s=>s.round===2);host.socket.emit('newRound',{});assert.equal((await next).phase,'playing');
+});
+test('bot can process a tile onto a public meld',async t=>{
+  const service=await setup(t,{botDelay:50}),host=await service.join('İnsan',null,{withBots:true});const room=service.rooms.get(host.session.roomCode),g=room.game;
+  g.currentPlayer=1;g.hasDrawn=true;g.okey={color:'Siyah',number:1};
+  g.playerStates[0].hasOpened=true;g.playerStates[0].openType='normal';g.playerStates[0].openedGroups=[[tile('Mavi',10),tile('Mavi',11),tile('Mavi',12)]];
+  g.playerStates[1].hasOpened=true;g.playerStates[1].openType='normal';g.playerTiles[1]=[tile('Mavi',13),tile('Siyah',9),tile('Kirmizi',2)];
+  const result=matchingState(host.socket,s=>s.openedGroups[0][0].length===4);host.socket.emit('resume',host.session);const state=await result;
+  assert(state.openedGroups[0][0].some(t=>t.id==='Mavi-13-0'));
+});
+test('bot timers stop when the human disconnects and resume with their session',async t=>{
+  const service=await setup(t,{botDelay:30}),host=await service.join('İnsan',null,{withBots:true});const room=service.rooms.get(host.session.roomCode),g=room.game;
+  g.currentPlayer=1;g.hasDrawn=false;
+  const serverSocket=service.io.sockets.sockets.get(host.socket.id),disconnected=once(serverSocket,'disconnect');host.socket.disconnect();await disconnected;
+  const before=JSON.stringify(g);await new Promise(resolve=>setTimeout(resolve,90));assert.equal(JSON.stringify(g),before);
+  const resumed=await service.client(),result=matchingState(resumed,s=>s.currentPlayer===0 || s.phase==='finished');resumed.emit('resume',host.session);await result;
+  assert.notEqual(JSON.stringify(g),before);
+});

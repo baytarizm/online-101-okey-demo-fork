@@ -203,3 +203,7 @@ dialog button { margin: 12px 5px 0 0; }
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; }
 }
+
+.friend-button { width: 100%; margin-top: 9px; font-size: 12px; }
+.waiting #startWithBots { display: block; width: 100%; margin: 18px 0 9px; font-size: 12px; }
+.waiting #leave { margin-top: 7px; }
