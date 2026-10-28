@@ -55,3 +55,10 @@ Upstream README’de MIT rozeti, package.json’da ISC tanımı var; upstream ay
 ## Doğrulama
 
 `npm test`: gerçek Socket.IO istemcileriyle dört oyuncu, ayrı masa izolasyonu, taş gizliliği, sıra/çekme kontrolü, sahte taş/puan ve tekrar ID reddi, token ile dönüş, taş korunumları, çift açılış/bitiş, checkpoint geri yükleme ve HTTP kontrolleri. Testler, bütün olası 101 kural varyantlarının onaylandığı anlamına gelmez.
+
+## Hayvan Sağlığı görsel teması
+
+- Taşlar masaüstünde 42 × 62 px, mobilde ekran genişliğine göre en az 28 px genişlikte ve yaklaşık 2:3 oranındadır. Izgara 11 sütun ve iki satırdır; taşlar ekran boyunca yatay esnemez. Renge/sayıya dizme soldan sağa ilerler.
+- `public/asset/animal-health-lounge.webp`: bu proje için yerleşik ImageGen ile üretilen 1536 × 1024 px ambiyans görselinin 146 KB WebP sürümü. Kısa üretim özeti: sığır/koyun/keçi/kanatlı duvar panoları, stetoskop ve saha defteri, ahşap ve pirinç ayrıntılar, çaylı sıcak veteriner kahvehanesi; oyun üstüne bineceği için orta alan sakin ve koyu yeşil, görsel üzerinde yazı veya oyun arayüzü yok.
+- `public/asset/animal-health-mark.svg`: özgün sığır, koyun ve kanatlı çizgisel masa filigranı. Resmî kurum logosu değildir.
+- Masa ve lobi aynı ambiyansı kullanır. Taşlar, sayılar, düğmeler ve tüm oyun bilgileri gerçek HTML/CSS olarak kalır.
