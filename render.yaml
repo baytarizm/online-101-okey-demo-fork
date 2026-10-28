@@ -1,0 +1,17 @@
+# Single-process game host. No paid resources are provisioned by this file.
+services:
+  - type: web
+    name: haysag-okey
+    runtime: node
+    plan: free
+    numInstances: 1
+    buildCommand: npm ci --omit=dev --ignore-scripts
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: YAZBOZ_ORIGIN
+        value: https://yazbozhaysag.vercel.app

@@ -1,132 +1,57 @@
-<div align="center">
-  <img src="https://img.shields.io/badge/101_Okey-Online-blue?style=for-the-badge&logo=auth0&logoColor=white" alt="101 Okey Badge">
-  <br>
-  
-  # 🎴 101 Okey Online - Premium Experience
+# HAYSAG OKEY · Online 101
 
-  **Modern, Hızlı ve Akıllı.**<br>
-  Web teknolojilerinin sınırlarını zorlayan, Socket.IO tabanlı gerçek zamanlı 101 Okey deneyimi.
-  
-  [Özellikler](#-özellikler) • [Kurulum](#-kurulum) • [Teknolojiler](#-teknolojiler) • [Oynanış](#-oynanış)
+Davet koduyla dört kişilik özel masalar. Yazboz içinden açılmak üzere hazırlanmıştır.
 
-  ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
-  ![Status](https://img.shields.io/badge/status-active-success?style=flat-square)
-  ![Version](https://img.shields.io/badge/version-1.1.0-blue?style=flat-square)
-</div>
+Kaynak: [boradmir/online-101-okey-demo](https://github.com/boradmir/online-101-okey-demo), Bora. Orijinal README `UPSTREAM_README.md` dosyasında korunmuştur. Fork, upstream'in taş oluşturma/dağıtma ve puanlama motorunu kullanır; lobi, oyun arayüzü ve Socket.IO hamle katmanı HAYSAG için yenilenmiştir.
 
----
+## Çalıştırma
 
-## ✨ Proje Hakkında
+Node.js 22+ (üretim imajı Node 24).
 
-Bu proje, geleneksel 101 Okey oyununu modern web arayüzü ve güçlü bir sunucu altyapısı ile dijital dünyaya taşır. Sadece bir oyun değil, aynı zamanda **"Self-Healing" (Kendi Kendini Onaran)** senkronizasyon yeteneğine sahip akıllı bir sistemdir.
-
-### 🌟 Öne Çıkan Yenilikler (v1.1)
-- **🛠️ Self-Repair Sync Engine:** Bağlantı kopmasa bile oyun mantığında senkron kayması (desync) olursa, sistem bunu milisaniyeler içinde fark eder ve oyuncuyu hissettirmeden oyuna tekrar senkronize eder.
-- **👆 Gelişmiş Drag & Drop:** Hem dokunmatik ekranlarda hem de mouse ile kusursuz çalışan, `sol cepten çekme` dahil tam kapsamlı sürükle-bırak desteği.
-- **🎨 Glassmorphism Tasarım:** Arka planda blur efektleri, canlı gradyanlar ve 3D derinlik hissi veren ıstaka tasarımı.
-
----
-
-## 💎 Özellikler
-
-### 🎮 Oyun Deneyimi
-- **4 Kişilik Gerçek Zamanlı Oyun:** Arkadaşlarınızla veya botlarla (hazırlık aşamasında) anlık kapışma.
-- **Akıllı Istaka:** 
-  - Taşları otomatik gruplama (Seri/Per).
-  - Puanı anlık hesaplama.
-  - Elinizdeki taşlar 101'e ulaştığında butonun yanması.
-- **Ceza Sistemi:** Yanlış hamlelerde, işler taş atıldığında veya hatalı el açma girişimlerinde kurallara uygun ceza puanı (+101).
-- **Domates Fırlatma 🍅:** Rakibinizi kızdırmak için eğlenceli interaktif efektler!
-
-### ⚙️ Teknik Derinlik
-- **Robust State Management:** Sunucu (`server/gameLogic.js`) oyunun tek gerçeklik kaynağıdır. İstemci sadece görselleştirmeyi yapar.
-- **Olay Tabanlı Mimari:** Socket.IO event'leri ile asenkron ve ölçeklenebilir iletişim.
-- **Güvenli Oynanış:** İstemci tarafında yapılan hile girişimleri (taş çalma, sırasız oynama) sunucu tarafından reddedilir.
-
----
-
-## 🚀 Kurulum ve Çalıştırma
-
-Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin.
-
-### Gereksinimler
-- [Node.js](https://nodejs.org/) (v14 veya üzeri)
-- Modern bir web tarayıcısı (Chrome, Edge, Firefox, Safari)
-
-### Adım Adım Kurulum
-
-1. **Projeyi Klonlayın**
-   ```bash
-   git clone https://github.com/boradmir/online-101-okey-demo.git
-   cd online-101-okey-demo
-   ```
-
-2. **Bağımlılıkları Yükleyin**
-   ```bash
-   npm install
-   ```
-
-3. **Sunucuyu Başlatın**
-   ```bash
-   npm start
-   # veya
-   node server/index.js
-   ```
-
-4. **Oyuna Girin**
-   Tarayıcınızda `http://localhost:3000` adresine gidin.
-   *İpucu: Test etmek için farklı sekmelerde veya Gizli Pencere'de 4 farklı oyuncu olarak girebilirsiniz.*
-
----
-
-## 📂 Proje Mimarisi
-
-```mermaid
-graph TD
-    User[Oyuncu] -->|WebSocket| Server[Node.js Server]
-    Server -->|Game Logic| GameState[Oyun Durumu]
-    GameState -->|Broadcast| Clients[Diğer Oyuncular]
-    
-    subgraph Frontend Logic
-        GameJS[game.js] -->|Render| UI[HTML/CSS]
-        GameJS -->|Validate| DragDrop[Sürükle Bırak]
-        GameJS -->|Sync| AutoRepair[Oto-Onarım]
-    end
+```sh
+npm ci
+npm test
+npm start
 ```
 
-### Dosya Yapısı
-- `public/js/game.js`: Oyunun beyni. 2700+ satırlık istemci mantığı.
-- `server/gameLogic.js`: Kuralların hakimi. Geçerli hamle kontrolü.
-- `public/css/style.css`: Görsel şölen. 1500+ satırlık detaylı stil dosyası.
+`http://localhost:3000` adresinde masa kurun; davet bağlantısıyla üç farklı sekmeden/cihazdan katılın. Dördüncü oyuncu geldiğinde oyun başlar. `/health` sağlık kontrolüdür. Geliştirme komutu `--port` parametresini destekler.
 
----
+## Oynanış
 
-## 🎲 Hızlı Kurallar
+- İsim yazın, yeni masa kurun veya altı karakterlik davet koduyla katılın.
+- Eşli, katlamalı ve işler taş cezası masa kurulurken belirlenir.
+- Taşlara dokunarak seçin; “Seçilenleri grupla” ile seri/per veya çift hazırlayın. Hazırlanan gruba dokunarak geri alın. “El aç” bütün grupları sunucuya gönderir.
+- İlk normal açılış en az 101, çift açılış en az 5 çifttir. Katlamalı masada sonraki normal açılış önceki puandan yüksek olmalıdır.
+- Açtıktan sonra aynı türde yeni gruplar indirebilirsiniz. Tek taş seçip masadaki seri/pere dokunarak işleyebilirsiniz. Çift açan oyuncu bir turda en fazla iki taş işler. Çift gruplarına üçüncü taş eklenmez.
+- Sıranızda önce ortadan/solunuzdan çekin, sonra tek taş seçip atın. Yerden aldığınız taşı ilk açılışta kullanmanız gerekir. Bir atış taşı bırakın; son taşı atınca el biter.
+- Normal bitiş −101, okey veya çift bitiş −202, çift ve okey bitişi −404. Diğer puanlar upstream'in `calculatePoints` kurallarıdır. Elden bitiş için ayrı çarpan bu sürümde uygulanmaz. Yığın bitince el puansız kapanır. Yazboz’un manuel 100 puan “Bitti” indirimi ayrı özelliktir; online masayla karıştırılmaz.
+- Skorlar masada elden ele toplanır. Yeni eli masa sahibi dört kişi bağlıyken başlatır.
+- Bot, sohbet, para/bahis veya herkese açık eşleştirme yoktur.
 
-1. **Amaç:** Elinizdeki taşları per (7-7-7) veya seri (5-6-7) yaparak toplam puanı 101'e ulaştırmak ve el açmak.
-2. **Başlangıç:** Herkese 21 taş dağıtılır. Başlayana 22 taş verilir, o taş çekmeden atar.
-3. **Akış:**
-   - Sırası gelen **yığından** veya **solundaki oyuncunun attığı taştan** çeker.
-   - Elindeki işe yaramayan bir taşı **sağına** atar.
-4. **Bitiş:** Elini açtıktan sonra elinde kalan son taşı boşa atarak oyunu bitirir.
+## Güvenlik ve bağlantı
 
----
+Sunucu taş sahipliğini, sıra ve çekme aşamasını, grup geçerliliğini ve açılış puanını doğrular. İstemcinin gönderdiği puan veya taş nesnesine güvenilmez. Her oyuncuya yalnızca kendi eli ve masanın açık bilgisi gönderilir. El bitince sonuçta kalan eller görünür.
 
-## 🤝 Katkıda Bulunma
+Yeniden bağlanma isimle değil, tahmin edilemez sekme oturum anahtarıyla yapılır. Sunucu yalnızca anahtar özetini tutar. Anahtar `sessionStorage` içindedir; başka cihaza otomatik taşınmaz. Oyun sırasında ayrılan oyuncunun sandalyesi ve indeksleri korunur; dönene kadar hamleler bekletilir. Lobi sandalyeleri bağlantı kesildikten iki dakika sonra boşalır. Herkes ayrıldıktan 30 dakika sonra masa temizlenir.
 
-Projeye katkıda bulunmak isterseniz çok mutlu oluruz!
+WebSocket yük sınırı ve bağlantı başına hamle sınırı vardır. Bu özel arkadaş masası sürümüdür; geniş halka açık servis için hesaplı kimlik, kötüye kullanım izleme ve işletim kontrolleri ayrıca gerekir.
 
-1. Fork'layın 🍴
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Commit yapın (`git commit -m 'Add some AmazingFeature'`)
-4. Push'layın (`git push origin feature/AmazingFeature`)
-5. Pull Request açın 📬
+## Yayın
 
----
+`render.yaml`, ücretsiz ve tek örnekli Node servisi tarifidir. Ücretli plan veya disk otomatik açılmaz. Render hesabında bu repo üzerinden Blueprint oluşturup yayımlanabilir; Dockerfile ile tek bir Node hostunda da çalışır. Render'ın canlı URL'si ancak deployment sonrası belli olur.
 
-<div align="center">
-  <p>Made with ❤️ by <b>Bora</b></p>
-  <p>
-    <a href="https://github.com/boradmir">GitHub Profilim</a>
-  </p>
-</div>
+**Tek örnek/tek süreç kullanın.** Oyun durumu varsayılan olarak RAM'dedir. Sunucu uyutulursa, yeniden başlatılırsa veya yeniden deploy edilirse aktif masalar kaybolur. Bunun korunması istenirse kalıcı disk bağlayıp `STATE_FILE` verin; örneğin `/app/data/rooms.json`. Bu dosya eller ve oturum anahtarı özetleri içerir; herkese açık dizinde tutulmamalıdır. Checkpoint, her hamlede atomik dosya değişimiyle yazılır. Çok örnekli dağıtım için paylaşılan durum/depolama ve dağıtık kilit/iletişim katmanı gerekir.
+
+Vercel WebSocket desteklese de bu tek süreç mimarisi Vercel Functions'a olduğu gibi yayınlanmamalıdır: bağlantılar farklı örneklere gidebilir. Bu yüzden bu repoda yanıltıcı bir Vercel yapılandırması yoktur.
+
+## Yazboz bağlantısı
+
+Yazboz `HAYSAG_OKEY_URL` build değişkenine canlı sunucunun HTTPS adresi verilir. `YAZBOZ_ORIGIN` varsayılanı `https://yazbozhaysag.vercel.app` olup iframe için izin verilen üst sayfadır. Yazboz alan adı değişirse bunu da güncelleyin. Oyunun “Yazboz’a dön” bağlantısı aynı adrese gider.
+
+## Lisans durumu
+
+Upstream README’de MIT rozeti, package.json’da ISC tanımı var; upstream ayrı LICENSE dosyası sağlamıyor. Bunlardan birini seçip yeni bir izin beyanı üretmedik. `package.json` içindeki upstream ISC bilgisi ve kaynak atfı korundu. Yeniden dağıtım/ticari kullanım koşulları upstream yazarından netleştirilmelidir. Görsel varlıklar için de upstream tarafından ayrıca bir izin metni verilmemiştir; HAYSAG arayüzü portre fotoğraflarını kullanmaz.
+
+## Doğrulama
+
+`npm test`: gerçek Socket.IO istemcileriyle dört oyuncu, ayrı masa izolasyonu, taş gizliliği, sıra/çekme kontrolü, sahte taş/puan ve tekrar ID reddi, token ile dönüş, taş korunumları, çift açılış/bitiş, checkpoint geri yükleme ve HTTP kontrolleri. Testler, bütün olası 101 kural varyantlarının onaylandığı anlamına gelmez.

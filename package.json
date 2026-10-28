@@ -1,11 +1,12 @@
 {
-  "name": "okey-101",
-  "version": "1.1.0",
-  "description": "Multiplayer 101 Okey oyunu",
+  "name": "haysag-okey",
+  "version": "2.0.0",
+  "description": "HAYSAG OKEY: davet koduyla dört kişilik online 101",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "node server/index.js"
+    "dev": "node server/index.js",
+    "test": "node --test"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -17,5 +18,11 @@
     "multiplayer"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "socket.io-client": "^4.8.4"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }

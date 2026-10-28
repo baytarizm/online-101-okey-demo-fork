@@ -44,6 +44,8 @@ class Logger {
         console.log(`${styles.fg.gray}[${this.getTimestamp()}]${styles.reset} ${styles.bright}${styles.fg.green}✅ SUCCESS${styles.reset} ${message}`, ...args);
     }
 
+    static warning(message, ...args) { return this.warn(message, ...args); }
+
     static warn(message, ...args) {
         console.log(`${styles.fg.gray}[${this.getTimestamp()}]${styles.reset} ${styles.fg.yellow}⚠️  WARN   ${styles.reset} ${message}`, ...args);
     }

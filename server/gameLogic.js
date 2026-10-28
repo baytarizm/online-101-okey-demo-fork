@@ -65,7 +65,7 @@ class GameLogic {
     // Taşları karıştır
     shuffleTiles() {
         for (let i = this.tiles.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
+            const j = require('node:crypto').randomInt(i + 1);
             [this.tiles[i], this.tiles[j]] = [this.tiles[j], this.tiles[i]];
         }
     }
@@ -76,9 +76,8 @@ class GameLogic {
         this.shuffleTiles();
 
         // Gösterge taşını belirle (sahte okey olmamalı)
-        do {
-            this.indicator = this.tiles.pop();
-        } while (this.indicator.isFakeJoker);
+        const indicatorIndex = this.tiles.findIndex(t => !t.isFakeJoker);
+        this.indicator = this.tiles.splice(indicatorIndex, 1)[0];
 
         // Okey taşını belirle (göstergenin bir üstü)
         const okeyNumber = this.indicator.number === 13 ? 1 : this.indicator.number + 1;
@@ -100,7 +99,7 @@ class GameLogic {
         this.tableGroups = [];
 
         // Rastgele başlayan oyuncu seç (dağıtıcı)
-        this.currentPlayer = Math.floor(Math.random() * 4);
+        this.currentPlayer = require('node:crypto').randomInt(4);
 
         // 101 Okey: Dağıtıcı 22 taş alır, diğerleri 21 taş
         for (let i = 0; i < 4; i++) {
