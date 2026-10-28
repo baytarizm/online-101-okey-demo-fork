@@ -32,7 +32,7 @@ function renderHand() {
     e.draggable=true;
     e.ondragstart=event=>event.dataTransfer.setData('text/plain',id);
     e.ondragover=event=>event.preventDefault();
-    e.ondrop=event=>{ event.preventDefault(); const source=event.dataTransfer.getData('text/plain'); const from=order.indexOf(source),to=order.indexOf(id); if(from<0||to<0)return; order.splice(from,1); order.splice(to,0,source); renderHand(); };
+    e.ondrop=event=>{ event.preventDefault(); const source=event.dataTransfer.getData('text/plain'); const from=order.indexOf(source),to=order.indexOf(id); if(from<0||to<0)return; order.splice(from,1); order.splice(to,0,source); renderHand(); socket.emit('sortTiles',{ids:order}); };
     return e;
   }));
   $('handCount').textContent='('+state.tiles.length+')';
@@ -100,7 +100,7 @@ socket.on('sessionExpired',()=>{sessionStorage.removeItem('haysagOkeySession');l
 socket.on('gameError',data=>message(data.message));socket.on('notice',data=>message(data.message));
 socket.on('state',data=>{
   const hadState=!!state;
-  const changed=hadState && (JSON.stringify(state.tiles.map(t=>t.id))!==JSON.stringify(data.tiles.map(t=>t.id)) || state.currentPlayer!==data.currentPlayer || state.phase!==data.phase || state.hasDrawn!==data.hasDrawn);
+  const changed=hadState && (JSON.stringify(state.tiles.map(t=>t.id).sort())!==JSON.stringify(data.tiles.map(t=>t.id).sort()) || state.currentPlayer!==data.currentPlayer || state.phase!==data.phase || state.hasDrawn!==data.hasDrawn);
   state=data;
   if(lastRound!==data.round){order=[];draft=[];selected.clear();lastRound=data.round;$('pairs').checked=false;if($('resultDialog').open)$('resultDialog').close();}
   else if(changed){draft=[];selected.clear();}
@@ -112,7 +112,7 @@ $('discard').onclick=()=>{if(selected.size===1)socket.emit('discardTile',{tileId
 $('makeGroup').onclick=()=>{if(selected.size<2)return;draft.push([...selected]);selected.clear();renderHand();renderControls();};
 $('open').onclick=()=>socket.emit('openHand',{groups:draft,pairs:$('pairs').checked});
 $('clear').onclick=()=>{selected.clear();draft=[];renderHand();renderControls();};
-for(const [id,sorter] of [['sortColor',(a,b)=>a.color.localeCompare(b.color)||a.number-b.number],['sortNumber',(a,b)=>a.number-b.number||a.color.localeCompare(b.color)]])$(id).onclick=()=>{order=[...state.tiles].sort(sorter).map(t=>t.id);renderHand();};
+for(const [id,sorter] of [['sortColor',(a,b)=>a.color.localeCompare(b.color)||a.number-b.number],['sortNumber',(a,b)=>a.number-b.number||a.color.localeCompare(b.color)]])$(id).onclick=()=>{order=[...state.tiles].sort(sorter).map(t=>t.id);renderHand();socket.emit('sortTiles',{ids:order});};
 $('invite').onclick=async()=>{
   if(!session)return;const link=new URL('/?room='+session.roomCode,location.origin).href;
   try{if(navigator.share)await navigator.share({title:'HAYSAG OKEY',text:'101 masamıza katıl · '+session.roomCode,url:link});else{await navigator.clipboard.writeText(link);message('Davet bağlantısı kopyalandı.');}}
