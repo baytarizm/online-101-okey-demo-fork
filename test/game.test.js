@@ -28,7 +28,7 @@ async function setup(t, options={}) {
   }
   async function join(name, code, options={}) {
     const s=await client();const sessionEvent=event(s,'session'),stateEvent=event(s,'state');
-    s.emit('joinGame',{playerName:name,create:!code,roomCode:code,...options});
+    s.emit('joinGame',{playerName:name,create:!code,roomCode:code,teamMode:false,...options});
     return { socket:s, session:await sessionEvent,state:await stateEvent };
   }
   async function table(options={}) {
@@ -96,11 +96,11 @@ test('opening uses server score and sends remaining tiles only to owner',async t
   s.emit('openHand',{groups:sets.map(g=>g.map(t=>t.id)),score:9999});const state=await own,other=await opponent;
   assert.equal(state.playerState.openScore,102);assert.equal(state.minimumOpenScore,103);assert.deepEqual(state.tiles,[spare]);assert(!JSON.stringify(other.tiles).includes(spare.id));assert(!('remainingTiles' in other));
 });
-test('discard from left must be used when opening; invalid discard keeps turn intact',async t=>{
+test('discard from left must be used when opening; unused discard draw is rolled back without advancing the turn',async t=>{
   const service=await setup(t),{players,room}=await service.table();const i=room.game.currentPlayer,s=players[i].socket;
   const g=room.game;g.okey={color:'Siyah',number:1};g.hasDrawn=false;g.discardPiles[(i+3)%4]=[tile('Mavi',4)];
   let p=event(s,'state');s.emit('drawTile',{fromDiscard:true});await p;
-  const length=g.playerTiles[i].length;p=event(s,'gameError');s.emit('discardTile',{tileId:g.playerTiles[i][0].id});assert.match((await p).message,/el aç/);assert.equal(g.currentPlayer,i);assert.equal(g.playerTiles[i].length,length);
+  const length=g.playerTiles[i].length;p=event(s,'gameError');s.emit('discardTile',{tileId:g.playerTiles[i][0].id});assert.match((await p).message,/el aç/);assert.equal(g.currentPlayer,i);assert.equal(g.playerTiles[i].length,length-1);assert.equal(g.hasDrawn,false);assert.equal(g.discardPiles[(i+3)%4].at(-1).id,'Mavi-4-0');
 });
 test('resume requires token, preserves seats, and does not expose another hand',async t=>{
   const service=await setup(t),{players,room}=await service.table();const owner=players[1];
@@ -113,8 +113,8 @@ test('pairs are removed from hand, and finish cannot be scored twice',async t=>{
   const service=await setup(t),{players,room}=await service.table();const i=room.game.currentPlayer,s=players[i].socket;
   const pairs=[2,3,4,6,7].map(n=>[tile('Mavi',n),tile('Mavi',n,1)]);room.game.playerTiles[i]=[...pairs.flat(),tile('Siyah',9)];room.game.okey={color:'Kirmizi',number:1};
   let p=event(s,'state');s.emit('openHand',{pairs:true,groups:pairs.map(g=>g.map(t=>t.id))});let state=await p;assert.equal(state.tiles.length,1);assert.equal(state.openedGroups[i].length,5);
-  p=event(s,'state');s.emit('discardTile',{tileId:'Siyah-9-0'});state=await p;assert.equal(state.phase,'finished');assert.equal(state.scores['player'+i],-202);
-  p=event(s,'gameError');s.emit('discardTile',{tileId:'Siyah-9-0'});await p;assert.equal(room.scores['player'+i],-202);
+  p=event(s,'state');s.emit('discardTile',{tileId:'Siyah-9-0'});state=await p;assert.equal(state.phase,'finished');assert.equal(state.scores['player'+i],-404);
+  p=event(s,'gameError');s.emit('discardTile',{tileId:'Siyah-9-0'});await p;assert.equal(room.scores['player'+i],-404);
 });
 test('optional disk checkpoint restores room and private token session',async t=>{
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'haysag-test-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));const stateFile=path.join(dir,'rooms.json');
@@ -162,7 +162,7 @@ for(const pairs of [false,true])test('bot legally opens '+(pairs?'five pairs':'1
   g.playerTiles[1]=[...groups.flat(),tile('Siyah',9)];
   const result=matchingState(host.socket,s=>s.phase==='finished');host.socket.emit('resume',host.session);const state=await result;
   assert.equal(state.result.winner,room.players[1].name);assert.equal(state.openedGroups[1].length,groups.length);assert.equal(g.playerTiles[1].length,0);
-  assert.equal(state.scores.player1,pairs?-202:-101);
+  assert.equal(state.scores.player1,pairs?-404:-202);
   const next=matchingState(host.socket,s=>s.round===2);host.socket.emit('newRound',{});assert.equal((await next).phase,'playing');
 });
 test('bot can process a tile onto a public meld',async t=>{
@@ -180,4 +180,30 @@ test('bot timers stop when the human disconnects and resume with their session',
   const before=JSON.stringify(g);await new Promise(resolve=>setTimeout(resolve,90));assert.equal(JSON.stringify(g),before);
   const resumed=await service.client(),result=matchingState(resumed,s=>s.currentPlayer===0 || s.phase==='finished');resumed.emit('resume',host.session);await result;
   assert.notEqual(JSON.stringify(g),before);
+});
+
+test('server timer advances an idle human turn; ordinary state/sort refreshes do not extend it',async t=>{
+ const service=await setup(t,{botDelay:100000}),{players,room}=await service.table({config:{TUR_SURESI_SN:1}});
+ const i=room.game.currentPlayer,s=players[i].socket;
+ const next=matchingState(s,state=>state.currentPlayer!==undefined && state.currentPlayer!==(i));
+ await s.emitWithAck('resume',players[i].session);const before=room.turnDeadline;
+ await s.emitWithAck('sortTiles',{ids:room.game.playerTiles[i].map(t=>t.id)});assert.equal(room.turnDeadline,before);
+ const state=await next;assert.equal(state.currentPlayer,(i+1)%4);assert.equal(room.game.discardPiles[i].length,1);
+ const all=[room.game.indicator,...room.game.tiles,...room.game.playerTiles.flat(),...room.game.discardPiles.flat()];assert.equal(new Set(all.map(t=>t.id)).size,106);
+});
+
+test('deck draw events do not disclose private tiles to other players',async t=>{
+ const service=await setup(t),{players,room}=await service.table();const i=room.game.currentPlayer,j=(i+1)%4;
+ await players[i].socket.emitWithAck('discardTile',{tileId:room.game.playerTiles[i][0].id});
+ const own=event(players[j].socket,'state'),other=event(players[i].socket,'state');players[j].socket.emit('drawTile',{});
+ const a=await own,b=await other;assert(a.lastEvent.tile);assert(!b.lastEvent.tile);assert.equal(b.lastEvent.type,'OnTileDrawn');assert(!('turnCheckpoint' in b));assert(!('jokerCheckpoint' in b));
+});
+
+test('Turkish opening preview returns score/error without mutation and draw aliases enforce turns',async t=>{
+ const service=await setup(t),{players,room}=await service.table();const g=room.game,i=g.currentPlayer,s=players[i].socket;
+ g.okey={color:'Kirmizi',number:1};const group=[tile('Mavi',3),tile('Mavi',4),tile('Mavi',5)];g.playerTiles[i]=[...group,tile('Siyah',9)];
+ const before=JSON.stringify(g),preview=await s.emitWithAck('acma_onizle',{groups:[group.map(t=>t.id)]});
+ assert.equal(preview.gecerli,false);assert.equal(preview.puan,12);assert.equal(preview.hata_kodu,'ACMA_BARAJI_YETERSIZ');assert.equal(JSON.stringify(g),before);
+ const rejected=await players[(i+1)%4].socket.emitWithAck('desteden_cek',{});assert.equal(rejected.code,'SIRA_SENDE_DEGIL');
+ const discarded=await s.emitWithAck('tas_at',{tileId:group[0].id});assert.equal(discarded.ok,true);assert.equal(g.currentPlayer,(i+1)%4);
 });

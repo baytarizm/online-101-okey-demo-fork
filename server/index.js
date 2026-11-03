@@ -6,7 +6,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Server } = require('socket.io');
 const GameLogic = require('./gameLogic');
-const { groupValue, selectedGroups } = require('./rules');
+const { groupValue, config, failure, meld } = require('./rules');
+const mechanics = require('./mechanics');
 const { findGroups, chooseDiscard } = require('./bot');
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 const avatars = ['alibicim.png', 'egefitness.png', 'james.jpg', 'lvblc5.jpg'];
@@ -20,6 +21,7 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
   const timers = new Set();
   const botTimers = new Map();
   const runningBots = new Set();
+  const turnTimers = new Map();
   const ready = room => room.players.every(p => p.isBot || p.socketId);
   const yazbozOrigin = new URL(process.env.YAZBOZ_ORIGIN || 'https://yazbozhaysag.vercel.app').origin;
   app.disable('x-powered-by');
@@ -38,7 +40,9 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
     for (const room of saved) {
       if (Date.now() - room.updatedAt > roomTtl) continue;
       room.players.forEach(p => { p.socketId = null; });
-      if (room.game) room.game = Object.assign(new GameLogic(), room.game);
+      room.config = config(room.config || {SAHTE_OKEY_MODU:'OKEY'});
+      if (room.game) { room.game = Object.assign(new GameLogic(), room.game); room.game.config=room.config; room.game.pendingJokers ||= []; room.game.turnNumber ||= 0; }
+      room.turnDeadline=null;
       rooms.set(room.code, room);
     }
   }
@@ -56,13 +60,16 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
     const g = room.game;
     return { roomCode:room.code, players:publicPlayers(room), playerIndex:index, host:index === 0, phase:room.phase,
       teamMode:room.teamMode, stackingMode:room.stackingMode, penaltyMode:room.penaltyMode, scores:room.scores,
+      config:room.config, turnDeadline:room.turnDeadline, serverNow:Date.now(), lastEvent:g?.lastEvent ? (g.lastEvent.type==='OnTileDrawn' && !g.lastEvent.fromDiscard && g.lastEvent.player!==index ? {...g.lastEvent,tile:undefined} : g.lastEvent) : null,
       minimumOpenScore:room.minimumOpenScore, round:room.round, result:room.result,
       tiles:g?.playerTiles[index] || [], indicator:g?.indicator, okey:g?.okey,
       currentPlayer:g?.currentPlayer, hasDrawn:g?.hasDrawn || false, pileCount:g?.tiles.length || 0,
+      melds:g?.playerStates.flatMap((s,owner)=>s.openedGroups.map((tiles,group)=>({id:room.round+':'+owner+':'+group,tur:meld(g,tiles,s.openType==='pairs')?.type,tasler:tiles,sahip:owner,takim:owner%2===0?'A':'B'}))) || [],
       playerState:g?.playerStates[index], openedGroups:g?.playerStates.map(s => s.openedGroups) || [[],[],[],[]],
       discards:g?.discardPiles.map(p => p.at(-1) || null) || [null,null,null,null] };
   }
   function broadcast(room) {
+    scheduleTurn(room);
     room.updatedAt = Date.now();
     room.players.forEach((p,i) => { if (p.socketId) io.to(p.socketId).emit('state', snapshot(room,i)); });
     persist();
@@ -71,17 +78,20 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
   function start(room) {
     room.game = new GameLogic();
     room.game.startGame(room.players);
-    room.phase = 'playing'; room.minimumOpenScore = 101; room.result = null; room.round++;
+    mechanics.initialize(room.game,room.config);
+    room.turnDeadline=null; room.turnKey=null;
+    room.phase = 'playing'; room.minimumOpenScore = room.config.ACMA_BARAJI_SERI; room.result = null; room.round++;
   }
   function finish(room, index, draw = false) {
     const game = room.game;
-    const points = draw ? [0,0,0,0] : game.calculatePoints(index, { type:game.playerStates[index].openType === 'pairs' ? 'pairs' : 'normal' });
+    const scored=mechanics.points(room,index,draw), points=scored.points;
     room.players.forEach((p,i) => {
       const key = room.teamMode ? 'team' + (i % 2 + 1) : 'player' + i;
       room.scores[key] = (room.scores[key] || 0) + points[i];
     });
     room.phase = 'finished';
-    room.result = { winner:draw ? null : room.players[index].name, points, draw, hands:game.playerTiles };
+    room.result = { winner:draw ? null : room.players[index].name, winnerTeam:!draw && room.teamMode ? index%2+1 : null, points, type:scored.type, factor:scored.factor, draw, hands:game.playerTiles };
+    mechanics.event(game,'OnHandFinished',index,{type:scored.type});
   }
   const sweep = setInterval(() => {
     for (const [code, room] of rooms) {
@@ -93,78 +103,65 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
 
   function assertTurn(room,index) {
     if (room.phase !== 'playing') throw new Error('Aktif el bulunmuyor.');
-    if (room.game.currentPlayer !== index) throw new Error('Sıra sizde değil.');
+    if (room.game.currentPlayer !== index) throw failure('SIRA_SENDE_DEGIL','Sıra sizde değil.');
     if (!ready(room)) throw new Error('Ayrılan oyuncunun dönmesi bekleniyor.');
   }
   const moves = {
-    drawTile(room, index, data) {
-      const game = room.game;
-      if (game.hasDrawn) throw new Error('Zaten taş çektiniz.');
-      if (!data.fromDiscard && !game.tiles.length) { finish(room,index,true); broadcast(room); return; }
-      const tile = data.fromDiscard ? game.drawFromDiscard(index) : game.drawFromPile(index);
-      if (!tile || tile.error) throw new Error(tile?.error || 'Çekilebilecek taş yok.');
-      game.playerTiles[index].push(tile); game.hasDrawn = true;
-      broadcast(room);
-    },
-    discardTile(room, index, data) {
-      const game = room.game;
-      if (!game.hasDrawn) throw new Error('Önce taş çekin.');
-      const hand = game.playerTiles[index];
-      const tileIndex = hand.findIndex(t => t.id === data.tileId);
-      if (tileIndex < 0) throw new Error('Bu taş elinizde yok.');
-      const tile = hand[tileIndex];
-      const state = game.playerStates[index];
-      if (state.mustOpenThisTurn && !state.hasOpened) throw new Error('Yerden aldığınız taşı kullanarak el açmalısınız.');
-      if (hand.length === 1 && !state.hasOpened) throw new Error('Önce el açın.');
-      const playable = game.playerStates.some(s => s.hasOpened && s.openType !== 'pairs' && s.openedGroups.some(g => groupValue(game,[...g,tile]) !== null));
-      const discarded = game.discardTile(index,tileIndex);
-      if (!discarded || discarded.error) throw new Error(discarded?.error || 'Taş atılamadı.');
-      if (playable && room.penaltyMode) {
-        const key = room.teamMode ? 'team' + (index % 2 + 1) : 'player' + index;
-        room.scores[key] = (room.scores[key] || 0) + 101;
-        room.players.forEach(p => { if (p.socketId) io.to(p.socketId).emit('notice',{ message:room.players[index].name + ' işler taş attı: +101 ceza.' }); });
-      }
-      state.drawnFromDiscardTile = null;
-      if (!hand.length) finish(room,index);
-      else { game.currentPlayer = (index + 1) % 4; game.hasDrawn = false; game.playerStates[game.currentPlayer].addedThisTurn = 0; }
-      broadcast(room);
-    },
-    openHand(room, index, data) {
-      const game = room.game;
-      if (!game.hasDrawn) throw new Error('Önce taş çekin.');
-      const state = game.playerStates[index];
-      const pairs = data.pairs === true;
-      if (state.hasOpened && (state.openType === 'pairs') !== pairs) throw new Error('Açma türünü değiştiremezsiniz.');
-      const chosen = selectedGroups(game,index,data.groups,pairs);
-      if (!state.hasOpened && pairs && chosen.tiles.length < 5) throw new Error('Çift açmak için en az 5 çift gerekli.');
-      if (!state.hasOpened && !pairs && chosen.score < room.minimumOpenScore) throw new Error('En az ' + room.minimumOpenScore + ' puan gerekli.');
-      if (state.drawnFromDiscardTile && !chosen.used.has(state.drawnFromDiscardTile.id)) throw new Error('Yerden aldığınız taşı açtığınız gruplarda kullanın.');
-      if (!state.hasOpened && !pairs && room.stackingMode) room.minimumOpenScore = chosen.score + 1;
-      state.hasOpened = true; state.openType = pairs ? 'pairs' : 'normal'; state.mustOpenThisTurn = false;
-      state.drawnFromDiscardTile = null; state.openScore += chosen.score;
-      state.openedGroups.push(...chosen.tiles);
-      game.playerTiles[index] = game.playerTiles[index].filter(t => !chosen.used.has(t.id));
-      broadcast(room);
-    },
-    addToGroup(room, index, data) {
-      const game = room.game;
-      const state = game.playerStates[index];
-      if (!game.hasDrawn || !state.hasOpened) throw new Error('Önce taş çekin ve el açın.');
-      if (!Number.isInteger(data.owner) || !Number.isInteger(data.group) || data.owner < 0 || data.owner > 3 || data.group < 0) throw new Error('Geçersiz grup.');
-      const target = game.playerStates[data.owner];
-      const group = target.openedGroups[data.group];
-      const tile = game.playerTiles[index].find(t => t.id === data.tileId);
-      if (!group || target.openType === 'pairs' || !tile || game.playerTiles[index].length <= 1) throw new Error('Bu gruba taş işlenemez.');
-      if (state.openType === 'pairs' && (state.addedThisTurn || 0) >= 2) throw new Error('Çift açan oyuncu bir turda en fazla iki taş işleyebilir.');
-      if (groupValue(game,[...group,tile]) === null) throw new Error('Taş bu gruba uymuyor.');
-      group.push(tile); state.addedThisTurn = (state.addedThisTurn || 0) + 1;
-      game.playerTiles[index] = game.playerTiles[index].filter(t => t.id !== tile.id);
-      broadcast(room);
-    },
+    drawTile:(room,i,data)=>mechanics.draw(room.game,i,data.fromDiscard===true),
+    discardTile:mechanics.discard,
+    openHand:mechanics.open,
+    addToGroup:mechanics.add,
+    swapJoker:mechanics.swap,
   };
   function performMove(room,index,name,data={}) {
     assertTurn(room,index);
-    return moves[name](room,index,data);
+    try {
+      if(name==='drawTile'&&data.fromDiscard)room.game.checkpointMinimum=room.minimumOpenScore;
+      const result=moves[name](room,index,data)||{};
+      if(result.penalty){
+        const key=room.teamMode?'team'+(index%2+1):'player'+index;
+        room.scores[key]=(room.scores[key]||0)+result.penalty;
+      }
+      if(result.draw)finish(room,index,true);
+      else if(result.finished)finish(room,index);
+      else if(name==='discardTile')mechanics.next(room.game,index);
+      broadcast(room);
+    } catch(error) {
+      // In particular, publish the rollback of an unused discarded tile.
+      if(error.code==='YERDEN_TAS_KULLANILMADI'&&room.game.checkpointMinimum!==undefined)room.minimumOpenScore=room.game.checkpointMinimum;
+      broadcast(room);throw error;
+    }
+  }
+  function scheduleTurn(room) {
+    const old=turnTimers.get(room.code);
+    const key=room.game?room.round+':'+room.game.turnNumber+':'+room.game.currentPlayer:null;
+    const active=room.phase==='playing' && ready(room) && room.config.TUR_SURESI_SN>0;
+    if(!active){if(old)clearTimeout(old.timer);turnTimers.delete(room.code);if(room.turnDeadline)room.turnRemaining=Math.max(1,room.turnDeadline-Date.now());room.turnDeadline=null;return;}
+    if(old?.key===key)return;
+    if(old)clearTimeout(old.timer);
+    if(room.turnKey!==key){room.turnRemaining=null;room.turnDeadline=null;}
+    room.turnKey=key;
+    room.turnDeadline ||= Date.now()+(room.turnRemaining??room.config.TUR_SURESI_SN*1000);room.turnRemaining=null;
+    const timer=setTimeout(()=>{
+      turnTimers.delete(room.code);
+      if(rooms.get(room.code)!==room || room.phase!=='playing' || !ready(room))return;
+      const i=room.game.currentPlayer;
+      try {
+        if(room.game.pendingJokers?.length && room.game.jokerCheckpoint){
+          const checkpoint=room.game.jokerCheckpoint;Object.assign(room.game,checkpoint);room.game.jokerCheckpoint=null;
+        }
+        mechanics.rollbackDiscardDraw(room.game,i);
+        if(!room.game.hasDrawn)performMove(room,i,'drawTile',{});
+        if(room.phase!=='playing')return;
+        const hand=room.game.playerTiles[i];
+        let id=room.game.lastDrawnId;
+        const {wild}=require('./rules');
+        if(!id || room.config.OKEY_ATMA_YASAK && wild(room.game,hand.find(t=>t.id===id)))
+          id=chooseDiscard({...botView(room,i),tiles:hand.filter(t=>!room.config.OKEY_ATMA_YASAK||!wild(room.game,t))});
+        performMove(room,i,'discardTile',{tileId:id});
+      }catch(error){console.error('Süre hamlesi:',error.message);room.turnDeadline=null;broadcast(room);}
+    },Math.max(1,room.turnDeadline-Date.now()));
+    timer.unref();turnTimers.set(room.code,{key,timer});
   }
   function fillBots(room) {
     if (!ready(room)) throw new Error('Bağlantısı kesilen oyuncunun dönmesini bekleyin.');
@@ -179,7 +176,7 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
   }
   function botView(room,index) {
     const game=room.game,state=game.playerStates[index];
-    return { tiles:game.playerTiles[index],okey:game.okey,hasOpened:state.hasOpened,openType:state.openType,
+    return { tiles:game.playerTiles[index],okey:game.okey,indicator:game.indicator,config:room.config,hasOpened:state.hasOpened,openType:state.openType,
       penaltyMode:room.penaltyMode,openedGroups:game.playerStates.map(s=>s.openedGroups),openTypes:game.playerStates.map(s=>s.openType) };
   }
   function botTurn(room) {
@@ -190,7 +187,7 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
     let pairs=view.openType==='pairs',plan=findGroups(view,pairs);
     if(!view.hasOpened && plan.score<room.minimumOpenScore) {
       const pairPlan=findGroups(view,true);
-      if(pairPlan.groups.length>=5){pairs=true;plan=pairPlan;}else plan={groups:[],score:0};
+      if(pairPlan.groups.length>=room.config.ACMA_BARAJI_CIFT){pairs=true;plan=pairPlan;}else plan={groups:[],score:0};
     }
     if(plan.groups.length)performMove(room,index,'openHand',{groups:plan.groups,pairs});
     // Process only public melds and keep a final discard in hand.
@@ -199,10 +196,10 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
       while(processed && room.game.playerTiles[index].length>1) {
         processed=false;
         const state=room.game.playerStates[index];
-        if(state.openType==='pairs' && (state.addedThisTurn || 0)>=2)break;
+        if(state.openType==='pairs' || !room.config.ISLEME_ACIK)break;
         outer:for(const tile of room.game.playerTiles[index])for(let owner=0;owner<4;owner++){
           const target=room.game.playerStates[owner];
-          if(target.openType==='pairs')continue;
+          if(target.openType==='pairs' || room.teamMode && owner!==index && owner%2===index%2 && !room.config.ORTAK_ISLEME)continue;
           for(let group=0;group<target.openedGroups.length;group++)if(groupValue(room.game,[...target.openedGroups[group],tile])!==null){
             performMove(room,index,'addToGroup',{owner,group,tileId:tile.id});processed=true;break outer;
           }
@@ -237,7 +234,7 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
   io.on('connection', socket => {
     let joinedRoom = null;
     let budget = 60, resetAt = Date.now();
-    function sendError(message) { socket.emit('gameError', { message }); }
+    function sendError(message,code) { socket.emit('gameError', { message,code }); }
     function member() {
       if (!joinedRoom) throw new Error('Önce masaya katılın.');
       const room = rooms.get(joinedRoom);
@@ -251,9 +248,9 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
         if (--budget < 0) return;
         try {
           if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Geçersiz istek.');
-          fn(data);
-          if (typeof ack === 'function') ack({ok:true});
-        } catch (err) { sendError(err.message); if (typeof ack === 'function') ack({ok:false,message:err.message}); }
+          const result=fn(data);
+          if (typeof ack === 'function') ack({ok:true,...result});
+        } catch (err) { sendError(err.message,err.code || 'GECERSIZ_ISTEK'); if (typeof ack === 'function') ack({ok:false,message:err.message,code:err.code || 'GECERSIZ_ISTEK'}); }
       });
     }
     action('joinGame', data => {
@@ -267,8 +264,8 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
         if (fromIp.length >= 10) throw new Error('Bu bağlantıdan en fazla 10 masa açılabilir.');
         let code;
         do { code = crypto.randomBytes(4).toString('hex').slice(0,6).toUpperCase(); } while (rooms.has(code));
-        room = { code, creatorIp:hash(socket.handshake.address), players:[], phase:'lobby', game:null,
-          teamMode:data.teamMode === true, stackingMode:data.stackingMode === true, penaltyMode:data.penaltyMode === true,
+        room = { config:config(data.config || {}), code, creatorIp:hash(socket.handshake.address), players:[], phase:'lobby', game:null,
+          teamMode:data.teamMode !== false, stackingMode:data.stackingMode === true, penaltyMode:data.penaltyMode === true,
           scores:{}, round:0, minimumOpenScore:101, result:null, updatedAt:Date.now() };
         rooms.set(code,room);
       } else {
@@ -302,6 +299,33 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
     action('discardTile', data => { const {room,index}=member(); performMove(room,index,'discardTile',data); });
     action('openHand', data => { const {room,index}=member(); performMove(room,index,'openHand',data); });
     action('addToGroup', data => { const {room,index}=member(); performMove(room,index,'addToGroup',data); });
+    action('swapJoker',data=>{const {room,index}=member();performMove(room,index,'swapJoker',data);});
+    action('previewOpen',data=>{const {room,index}=member();assertTurn(room,index);const result=mechanics.preview(room,index,data);socket.emit('openingPreview',{valid:true,score:result.score,groups:result.tiles,requestId:data.requestId});});
+    action('cancelDiscardDraw',()=>{const {room,index}=member();assertTurn(room,index);if(mechanics.rollbackDiscardDraw(room.game,index)&&room.game.checkpointMinimum!==undefined)room.minimumOpenScore=room.game.checkpointMinimum;broadcast(room);});
+    // Turkish command contract; legacy socket names remain compatible with existing clients.
+    const commandTarget=(room,data)=>{
+      if(!data.hedefMeldId && !data.meldId)return data;
+      const parts=String(data.hedefMeldId||data.meldId).split(':').map(Number);
+      if(parts.length!==3 || parts[0]!==room.round || parts.some(n=>!Number.isInteger(n)))throw failure('GECERSIZ_PER','Per kimliği geçersiz.');
+      return {...data,owner:parts[1],group:parts[2]};
+    };
+    for(const [command,move] of Object.entries({desteden_cek:'drawTile',yerden_al:'drawTile',tas_at:'discardTile',ac_seri_kut:'openHand',ac_cift:'openHand',acmayi_onayla:'openHand',tas_isle:'addToGroup',joker_al:'swapJoker',eli_bitir:'discardTile'}))action(command,data=>{
+      const {room,index}=member();
+      const input=commandTarget(room,data);
+      if(command==='yerden_al')input.fromDiscard=true;
+      if(command==='ac_cift')input.pairs=true;
+      if(command==='ac_seri_kut')input.pairs=false;
+      if(data.meldler)input.groups=data.meldler.map(g=>Array.isArray(g)?g:g.tasler.map(t=>typeof t==='string'?t:t.id));
+      if(data.ciftler){input.groups=data.ciftler.map(g=>g.map(t=>typeof t==='string'?t:t.id));input.pairs=true;}
+      if(data.yerineKonanTileId)input.tileId=data.yerineKonanTileId;
+      if(data.pozisyon)input.position=data.pozisyon;
+      performMove(room,index,move,input);
+    });
+    action('acma_onizle',data=>{
+      const {room,index}=member();assertTurn(room,index);
+      try{const p=mechanics.preview(room,index,data);return {gecerli:true,puan:p.score,meldler:p.tiles};}
+      catch(error){let score=0;try{score=require('./rules').selectedGroups(room.game,index,data.groups,data.pairs===true,data.jokerValues||{}).score;}catch{}return {gecerli:false,puan:score,hata_kodu:error.code||'GECERSIZ_PER',message:error.message};}
+    });
     action('sortTiles', data => {
       const { room,index,game } = member();
       if (room.phase !== 'playing' || !Array.isArray(data.ids)) throw new Error('Geçersiz sıralama.');
@@ -348,7 +372,7 @@ function createGameServer({ stateFile = process.env.STATE_FILE, roomTtl = 30 * 6
       }
     });
   });
-  server.on('close', () => { clearInterval(sweep); timers.forEach(clearTimeout); botTimers.forEach(clearTimeout); botTimers.clear(); });
+  server.on('close', () => { clearInterval(sweep); timers.forEach(clearTimeout); botTimers.forEach(clearTimeout); botTimers.clear(); turnTimers.forEach(t=>clearTimeout(t.timer));turnTimers.clear(); });
   return { app, server, io, rooms };
 }
 if (require.main === module) {

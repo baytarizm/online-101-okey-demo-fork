@@ -39,7 +39,7 @@ class GameLogic {
 
     // Tüm taşları oluştur (106 taş)
     createTiles() {
-        const colors = ['Kirmizi', 'Yesil', 'Mavi', 'Siyah'];
+        const colors = ['Kirmizi', 'Sari', 'Mavi', 'Siyah'];
         this.tiles = [];
 
         // Her renk için 1-13 arası 2 set (104 taş)

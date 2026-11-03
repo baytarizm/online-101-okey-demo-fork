@@ -292,3 +292,37 @@ dialog button { margin: 12px 5px 0 0; }
 @media (max-height: 550px) and (orientation: landscape) {
   .table-arena .felt { min-height: 250px; }.owner-groups { min-height: 105px; }
 }
+/* Eşli 101 commands and states */
+.tile.yellow {color:#b78400;}
+.joker-value {position:absolute;bottom:1px;right:1px;padding:1px 2px;border-radius:2px;background:#003c3680;color:white;font:9px system-ui;}
+.rack {--rack-columns:15;grid-template-columns:repeat(15,var(--tile-w));}
+.rack-empty {width:var(--tile-w);height:var(--tile-h);min-height:0;padding:0;background:#0001;border:1px dashed #e9d4ae22;border-radius:4px;}
+.rack-empty:hover,.rack-empty:focus-visible {border-color:#e8d099;background:#ffffff12;}
+.rack-head {flex-wrap:wrap;}.rack-head>div {flex-wrap:wrap;gap:8px;}
+.preview-info {min-height:20px;text-align:center;color:#eabf8b;font-size:12px;}.preview-info.valid {color:#9ae4b5;}
+.move-notice {text-align:center;font-size:12px;color:#bdd3c7;min-height:18px;margin:6px;}
+.draft-group {display:inline-flex;align-items:center;gap:3px;}.draft-group [role=button] {cursor:pointer;outline:1px dashed #dfbd6d;}
+.owner-groups.team-a {border-inline-start:3px solid #71d9c5;}.owner-groups.team-b {border-inline-start:3px solid #e6b77b;}.owner-groups.partner {background:#6ee7cf0d;}
+.opponent-rack {display:flex;gap:1px;margin-top:4px;justify-content:center;}
+.tile-back {display:block;width:8px;height:14px;border:1px solid #d8c39e88;border-radius:2px;background:repeating-linear-gradient(45deg,#506e62 0 2px,#365247 2px 4px);}
+.player[data-seat="1"] .opponent-rack,.player[data-seat="3"] .opponent-rack {flex-direction:column;align-items:center;position:absolute;top:60px;left:45%;}
+.player[data-seat="1"] .tile-back,.player[data-seat="3"] .tile-back {width:14px;height:5px;}
+.player.current .player-initial {background:conic-gradient(#e7bd71 var(--turn-progress,100%),#1c4940 0);border:2px solid #c6ab6b;}
+.swappable {cursor:alias;}.swappable:hover {outline:2px solid #f9d77f;}
+#turnClock {font-variant-numeric:tabular-nums;font-size:12px;color:#f6d69a;}
+.advanced-settings {margin-top:12px;font-size:12px;}.advanced-settings summary {cursor:pointer;padding:6px;}
+.setting-row {display:flex!important;justify-content:space-between;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid #ffffff0c;}
+.setting-row input[type=number] {width:90px;min-width:60px;padding:7px!important;margin:0!important;}
+.setting-row input[type=checkbox] {width:18px;height:18px;}.setting-row select {max-width:180px;}
+#jokerDialog label {display:block;margin-block:12px;}#jokerDialog select,#jokerDialog input {margin-left:12px;color:#122c25;background:#fff9eb;padding:6px;}
+.invalid-move {animation:invalid-shake 180ms linear;}
+.rack[data-animation=OnTileDrawn] .tile {animation:tile-arrive var(--draw-ms,250ms) ease-out;}
+.rack[data-animation=OnTileDiscarded] {animation:discard-pulse var(--discard-ms,300ms) ease-out;}
+.table-groups.meld-animation {animation:tile-arrive var(--open-ms,400ms) ease-out;}
+@keyframes invalid-shake {25%,75%{transform:translateX(-3px);outline-color:#e58d87;}50%{transform:translateX(3px);}}
+@keyframes tile-arrive {from{opacity:.5;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes discard-pulse {50%{filter:brightness(1.12);}}
+@media(max-width:600px){.opponent-rack {display:none;}:root {--tile-w:clamp(17px,calc((100vw - 60px) / 15),29px);}.rack {gap:8px 2px;}.joker-value {font-size:7px;}.rack-head>div {gap:7px;}.rack-head {justify-content:center;}.text-button {min-height:28px;}.turn-line {flex-wrap:wrap;}}
+@media(prefers-reduced-motion:reduce){.invalid-move,.rack .tile,.rack,.table-groups {animation:none!important;}}
+
+.owner-melds {gap:8px;}
