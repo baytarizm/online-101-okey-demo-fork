@@ -3,7 +3,7 @@ const { groupValue, effective, wild } = require('./rules');
 
 // The planner receives only this bot's hand and public table information.
 function keepValue(view, tile) {
-  const game = { okey:view.okey };
+  const game = { okey:view.okey,indicator:view.indicator,config:view.config };
   if (wild(game,tile)) return 1000;
   const value = effective(game,tile);
   let score = -value.number / 10;
@@ -21,7 +21,7 @@ function keepValue(view, tile) {
 }
 
 function findGroups(view, pairs = false) {
-  const tiles = view.tiles, game = {okey:view.okey};
+  const tiles = view.tiles, game = {okey:view.okey,indicator:view.indicator,config:view.config};
   if (tiles.length < (pairs ? 3 : 4)) return {groups:[],score:0};
   const candidates = [], seen = new Set();
   function add(indices) {
@@ -40,7 +40,7 @@ function findGroups(view, pairs = false) {
     combinations(0,3,[]); combinations(0,4,[]);
     // Longer runs: pick one physical copy for each number, using at most two okeys.
     const jokers = tiles.flatMap((t,i)=>wild(game,t)?[i]:[]);
-    for (const color of ['Kirmizi','Yesil','Mavi','Siyah']) {
+    for (const color of ['Kirmizi','Sari','Mavi','Siyah']) {
       for(let start=1;start<=9;start++)for(let end=start+4;end<=13;end++)for(let variant=0;variant<2;variant++){
         const indices=[];let joker=0,valid=true;
         for(let number=start;number<=end;number++){
@@ -76,7 +76,7 @@ function findGroups(view, pairs = false) {
   return {groups:chosen.map(c=>c.indices.map(i=>tiles[i].id)),score:chosen.reduce((sum,c)=>sum+c.score,0)};
 }
 function chooseDiscard(view) {
-  const game={okey:view.okey};
+  const game={okey:view.okey,indicator:view.indicator,config:view.config};
   return [...view.tiles].sort((a,b)=>{
     const value=t=>keepValue(view,t)+(view.penaltyMode && view.openedGroups.some((groups,i)=>view.openTypes[i]!=='pairs'&&groups.some(g=>groupValue(game,[...g,t])!==null))?150:0);
     return value(a)-value(b);
