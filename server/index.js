@@ -1,8 +1,9 @@
 'use strict';
 const express=require('express');const http=require('node:http');const crypto=require('node:crypto');const path=require('node:path');const fs=require('node:fs');const {Server}=require('socket.io');const K=require('./king');
-const Bots=require('./bots');const {fromGame:botView}=require('./bots/view');
+const Bots=require('./bots');const {BotRunner}=require('./bots/runner');const {fromGame:botView}=require('./bots/view');
 const hash=v=>crypto.createHash('sha256').update(v).digest('hex');
 function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=process.env.STATE_FILE,roomTtl=30*60_000}={}){
+ const botRunner=new BotRunner();
  const app=express(),server=http.createServer(app),io=new Server(server,{maxHttpBufferSize:4096}),rooms=new Map(),timers=new Map();
  const origin=new URL(process.env.YAZBOZ_ORIGIN||'https://yazbozhaysag.vercel.app').origin;
  app.disable('x-powered-by');app.use((req,res,next)=>{res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Content-Security-Policy',`default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' ws: wss:; frame-ancestors 'self' ${origin}; base-uri 'none'; form-action 'self'`);next();});
@@ -15,9 +16,15 @@ function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=p
  const g=r.game;if(['finished','roundEnd'].includes(g.phase))return;
  const delay=g.phase==='trick'?trickDelay:r.players[g.current]?.isBot?botDelay:turnMs;
  r.deadline=Date.now()+delay;
- const timer=setTimeout(()=>{timers.delete(r.code);if(rooms.get(r.code)!==r||!ready(r))return;try{if(g.phase==='trick')K.advance(g);else auto(r);broadcast(r);}catch(e){console.error('King sıra hatası:',e.message);}},delay);timer.unref();timers.set(r.code,timer);
+ const timer=setTimeout(async()=>{timers.delete(r.code);if(rooms.get(r.code)!==r||!ready(r))return;try{if(g.phase==='trick')K.advance(g);else if(await auto(r)===false)return;broadcast(r);}catch(e){console.error('King sıra hatası:',e.message);}},delay);timer.unref();timers.set(r.code,timer);
  }
- function auto(r){const g=r.game,p=g.current;if(g.phase==='choosing'){const choice=Bots.chooseContract(botView(g,p));K.choose(g,p,choice.type,choice.trump);}else if(g.phase==='playing')K.play(g,p,Bots.chooseCard(botView(g,p)));}
+ async function auto(r){const g=r.game,p=g.current,view=botView(g,p);if(g.phase==='choosing'){const choice=Bots.chooseContract(view);K.choose(g,p,choice.type,choice.trump);}else if(g.phase==='playing'){
+  const key=g.round+':'+g.trickNo+':'+g.trick.length+':'+p;
+  const difficulty=r.botDifficulty||'medium',options={difficulty,samples:24,budgetMs:35};
+  const id=difficulty==='hard'&&view.legal.length>1?await botRunner.choose(view,options):Bots.chooseCard(view,options);
+  if(rooms.get(r.code)!==r||r.game!==g||!ready(r)||g.phase!=='playing'||key!==g.round+':'+g.trickNo+':'+g.trick.length+':'+g.current)return false;
+  K.play(g,p,id);
+ }}
  function broadcast(r){r.updatedAt=Date.now();schedule(r);for(let i=0;i<r.players.length;i++)if(r.players[i].socketId)io.to(r.players[i].socketId).emit('state',snapshot(r,i));persist();}
  function start(r){if(r.players.length!==4||!ready(r))throw Error('Dört oyuncu bağlı olmalı.');r.game=K.create();}
  const sweep=setInterval(()=>{for(const [code,r] of rooms)if(r.players.every(p=>!p.socketId)&&Date.now()-r.updatedAt>roomTtl){clearTimeout(timers.get(code));timers.delete(code);rooms.delete(code);}persist();},60000);sweep.unref();
@@ -35,7 +42,7 @@ function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=p
  action('leaveRoom',()=>{const {r,i}=member();if(r.game)throw Error('Maç sürerken yeriniz korunur.');r.players.splice(i,1);joined=null;socket.emit('sessionExpired');if(!r.players.length)rooms.delete(r.code);else broadcast(r);persist();});
  socket.on('disconnect',()=>{if(!joined)return;const r=rooms.get(joined),p=r?.players.find(p=>p.socketId===socket.id);if(!p)return;p.socketId=null;broadcast(r);});
  });
- server.on('close',()=>{clearInterval(sweep);for(const t of timers.values())clearTimeout(t);});return {app,server,io,rooms};
+ server.on('close',()=>{botRunner.close();clearInterval(sweep);for(const t of timers.values())clearTimeout(t);});return {app,server,io,rooms};
 }
 if(require.main===module){const {server}=createGameServer();const portArg=process.argv.indexOf('--port');const port=Number(process.env.PORT||(portArg>=0?process.argv[portArg+1]:3000));if(!Number.isInteger(port)||port<1||port>65535)throw Error('Geçersiz port.');server.listen(port,'0.0.0.0',()=>console.log('HAYSAG KING hazır.'));process.on('SIGTERM',()=>{server.close();setTimeout(()=>process.exit(0),2000).unref();});}
 module.exports={createGameServer};
