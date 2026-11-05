@@ -6,7 +6,7 @@ const singleton=g=>g.hands.some(h=>{const hs=h.filter(c=>c[0]==='H');return hs.l
 function setDeal(g,seed){g.hands=seededHands(seed);}
 function policy(name){if(name==='legacy')return Legacy;if(name==='random')return {chooseCard:(v,o)=>v.legal[Math.floor(o.random()*v.legal.length)],chooseContract:(v,o)=>({type:v.options[Math.floor(o.random()*v.options.length)],trump:K.SUITS[Math.floor(o.random()*4)]})};return {chooseCard:(v,o)=>Bots.chooseCard(v,{...o,difficulty:name,now:o.fixedSamples?()=>0:undefined}),chooseContract:(v,o)=>Bots.chooseContract(v,{...o,difficulty:name})};}
 function match(seed,candidate='medium',opponent='legacy',settings={}){
- const g=K.create(),seat=seed%4,randoms=Array.from({length:4},(_,p)=>rng((seed^0xabcdef)+p*7919)),timings=[],policies=Array.from({length:4},(_,i)=>policy(i===seat?candidate:opponent));let moves=0,illegal=0;
+ const g=K.create(),seat=seed%4,randoms=Array.from({length:4},(_,p)=>rng((seed^0xabcdef)+p*7919)),timings=[],levels=settings.lineup?Array.from({length:4},(_,p)=>settings.lineup[(p-seat+4)%4]):Array.from({length:4},(_,i)=>i===seat?candidate:opponent),policies=levels.map(policy);let moves=0,illegal=0;
  setDeal(g,seed*100003);
  while(g.phase!=='finished'){
   if(g.phase==='choosing'){
@@ -19,7 +19,7 @@ function match(seed,candidate='medium',opponent='legacy',settings={}){
   }else if(g.phase==='trick')K.advance(g);
   else{K.next(g);setDeal(g,seed*100003+g.round*997);}
  }
- return {score:g.scores[seat],penalty:-g.history.filter(r=>r.type!=='koz').reduce((n,r)=>n+r.points[seat],0),win:g.scores[seat]>=0,illegal,moves,timings,byContract:Object.fromEntries(Object.keys(K.TYPES).map(t=>{const rs=g.history.filter(r=>r.type===t);return [t,{sum:rs.reduce((n,r)=>n+r.points[seat],0),n:rs.length}];}))};
+ return {seat,levels,scores:g.scores.slice(),score:g.scores[seat],penalty:-g.history.filter(r=>r.type!=='koz').reduce((n,r)=>n+r.points[seat],0),win:g.scores[seat]>=0,illegal,moves,timings,byContract:Object.fromEntries(Object.keys(K.TYPES).map(t=>{const rs=g.history.filter(r=>r.type===t);return [t,{sum:rs.reduce((n,r)=>n+r.points[seat],0),n:rs.length}];}))};
 }
 function summarize(rows){const times=rows.flatMap(r=>r.timings).sort((a,b)=>a-b);const n=rows.length,mean=a=>a.reduce((x,y)=>x+y,0)/a.length;return {matches:n,rounds:n*20,averageScore:mean(rows.map(r=>r.score)),averagePenaltyPerMatch:mean(rows.map(r=>r.penalty)),winRate:mean(rows.map(r=>Number(r.win))),illegal:rows.reduce((n,r)=>n+r.illegal,0),decisionMs:{p50:times[Math.floor(times.length*.5)]||0,p95:times[Math.floor(times.length*.95)]||0,max:times.at(-1)||0},byContract:Object.fromEntries(Object.keys(K.TYPES).map(t=>[t,rows.reduce((n,r)=>n+r.byContract[t].sum,0)/rows.reduce((n,r)=>n+r.byContract[t].n,0)]))};}
 function compare({matches=50,seed=701,candidate='medium',opponent='legacy',settings={}}={}){const before=[],after=[];for(let i=0;i<matches;i++){before.push(match(seed+i,'legacy',opponent,settings));after.push(match(seed+i,candidate,opponent,settings));}const delta=after.map((r,i)=>r.score-before[i].score),avg=delta.reduce((a,b)=>a+b,0)/matches,se=Math.sqrt(delta.reduce((n,x)=>n+(x-avg)**2,0)/Math.max(1,matches-1)/matches);return {seed,candidate,opponent,settings,before:summarize(before),after:summarize(after),pairedScoreGain:{mean:avg,ci95:[avg-1.96*se,avg+1.96*se]}};}

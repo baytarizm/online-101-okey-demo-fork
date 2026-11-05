@@ -1,0 +1,3 @@
+'use strict';
+const {test}=require('node:test');const assert=require('node:assert/strict');const {BotRunner}=require('../server/bots/runner');const {fromGame}=require('../server/bots/view');const K=require('../server/king');
+test('runner accounts for busy/closed fallbacks without changing legal choices',async()=>{const r=new BotRunner(),g=K.create();K.choose(g,0,'el');const view=fromGame(g,0);const first=r.choose(view,{samples:256,budgetMs:100});assert.ok(view.legal.includes(await r.choose(view)));assert.equal(r.stats.busy,1);r.close();assert.ok(view.legal.includes(await first));assert.ok(view.legal.includes(await r.choose(view)));assert.equal(r.stats.requests,3);assert.equal(r.stats.closed,2);});

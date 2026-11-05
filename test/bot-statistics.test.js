@@ -1,0 +1,5 @@
+'use strict';
+const {test}=require('node:test');const assert=require('node:assert/strict');const {interval,placement}=require('../scripts/bot-statistics');const {match}=require('../scripts/bot-arena');
+test('nonnegative success is distinct from first place, including ties',()=>{assert.deepEqual(placement([100,100,-100,-100],0),{nonnegative:1,firstShare:.5,soleFirst:0,rank:1.5});assert.equal(placement([100,10,-30,-80],1).firstShare,0);assert.equal(placement([100,10,-30,-80],1).nonnegative,1);});
+test('paired bootstrap is deterministic and contains a constant delta exactly',()=>{const a=interval([3,3,3,3]);assert.deepEqual(a.ci,[3,3]);assert.deepEqual(interval([1,-2,5,8]),interval([1,-2,5,8]));assert.throws(()=>interval([]));});
+test('mixed lineup rotates physical seats and keeps actual scores balanced',()=>{const lineup=['legacy','medium','easy','legacy'];const r=match(61001,'legacy','legacy',{lineup});assert.equal(r.levels[r.seat],'legacy');assert.equal(r.scores.reduce((a,b)=>a+b,0),0);assert.equal(r.illegal,0);});

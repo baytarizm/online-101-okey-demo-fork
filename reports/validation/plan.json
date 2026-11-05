@@ -1,0 +1,25 @@
+{
+  "source": "fbcd904e53d4760f83a3857898d1fef4c3ce2ef0",
+  "seed": 48001,
+  "matches": 200,
+  "settings": {
+    "samples": 24,
+    "budgetMs": 35,
+    "fixedSamples": false
+  },
+  "scenarios": [
+    "legacy/medium",
+    "easy/medium",
+    "medium/medium",
+    "hard/medium",
+    "mixed:hard-medium-easy-legacy"
+  ],
+  "metrics": [
+    "mean score",
+    "nonnegative >=0",
+    "first place shared on tie",
+    "sole first",
+    "average rank"
+  ],
+  "note": "No bot policy tuning on these seeds. Production sample/time settings; wall-clock timing can change sample count. Each independent seed rotates seats. Bootstrap resamples complete matches."
+}
