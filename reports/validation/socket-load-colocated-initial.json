@@ -1,0 +1,125 @@
+[
+  {
+    "tables": 50,
+    "clients": 50,
+    "roomCount": 50,
+    "testOnlyAdmissionOverride": true,
+    "productionAdmission": {
+      "total": 100,
+      "perIp": 10
+    },
+    "setupMs": 393.426846,
+    "completedFirstTricks": 50,
+    "totalMs": 3105.738504,
+    "errors": 0,
+    "worker": {
+      "requests": 140,
+      "search": 5,
+      "noSamples": 0,
+      "busy": 135,
+      "timeout": 0,
+      "error": 0,
+      "invalid": 0,
+      "closed": 0
+    },
+    "firstTrickMs": {
+      "p50": 2607.3704549999998,
+      "p95": 2609.269179,
+      "max": 2670.1767090000003
+    },
+    "health": {
+      "requests": 60,
+      "errors": 0,
+      "p95Ms": 216.58308499999998,
+      "p99Ms": 321.137463
+    },
+    "eventLoop": {
+      "p99Ms": 14.082047,
+      "maxMs": 32.948223
+    },
+    "rssIncreaseMiB": 41.96484375,
+    "note": "Actual isolated Socket.IO server: one human client and three hard bots per room, production 850 ms bot delay. First trick only; not a long soak or deployed Render measurement."
+  },
+  {
+    "tables": 100,
+    "clients": 100,
+    "roomCount": 100,
+    "testOnlyAdmissionOverride": true,
+    "productionAdmission": {
+      "total": 100,
+      "perIp": 10
+    },
+    "setupMs": 602.0266659999998,
+    "completedFirstTricks": 100,
+    "totalMs": 3290.4448490000004,
+    "errors": 0,
+    "worker": {
+      "requests": 273,
+      "search": 7,
+      "noSamples": 0,
+      "busy": 266,
+      "timeout": 0,
+      "error": 0,
+      "invalid": 0,
+      "closed": 0
+    },
+    "firstTrickMs": {
+      "p50": 2604.569875,
+      "p95": 2630.8348589999996,
+      "max": 2641.2579419999993
+    },
+    "health": {
+      "requests": 62,
+      "errors": 0,
+      "p95Ms": 327.66079400000035,
+      "p99Ms": 483.1108449999997
+    },
+    "eventLoop": {
+      "p99Ms": 16.605183,
+      "maxMs": 31.768575
+    },
+    "rssIncreaseMiB": 33.51953125,
+    "note": "Actual isolated Socket.IO server: one human client and three hard bots per room, production 850 ms bot delay. First trick only; not a long soak or deployed Render measurement."
+  },
+  {
+    "tables": 300,
+    "clients": 300,
+    "roomCount": 300,
+    "testOnlyAdmissionOverride": true,
+    "productionAdmission": {
+      "total": 100,
+      "perIp": 10
+    },
+    "setupMs": 617.9302559999996,
+    "completedFirstTricks": 300,
+    "totalMs": 3287.4117160000005,
+    "errors": 0,
+    "worker": {
+      "requests": 826,
+      "search": 8,
+      "noSamples": 0,
+      "busy": 818,
+      "timeout": 0,
+      "error": 0,
+      "invalid": 0,
+      "closed": 0
+    },
+    "firstTrickMs": {
+      "p50": 2611.5794319999995,
+      "p95": 2639.7934129999994,
+      "max": 2651.7135880000005
+    },
+    "health": {
+      "requests": 62,
+      "errors": 0,
+      "p95Ms": 349.0373929999996,
+      "p99Ms": 498.8382270000002
+    },
+    "eventLoop": {
+      "p99Ms": 11.943935,
+      "maxMs": 59.211775
+    },
+    "rssIncreaseMiB": 40.12109375,
+    "note": "Actual isolated Socket.IO server: one human client and three hard bots per room, production 850 ms bot delay. First trick only; not a long soak or deployed Render measurement."
+  }
+]

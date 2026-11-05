@@ -1,0 +1,448 @@
+{
+  "plan": {
+    "source": "fbcd904e53d4760f83a3857898d1fef4c3ce2ef0",
+    "seed": 48001,
+    "matches": 200,
+    "settings": {
+      "samples": 24,
+      "budgetMs": 35,
+      "fixedSamples": false
+    },
+    "scenarios": [
+      "legacy/medium",
+      "easy/medium",
+      "medium/medium",
+      "hard/medium",
+      "mixed:hard-medium-easy-legacy"
+    ],
+    "metrics": [
+      "mean score",
+      "nonnegative >=0",
+      "first place shared on tie",
+      "sole first",
+      "average rank"
+    ],
+    "note": "No bot policy tuning on these seeds. Production sample/time settings; wall-clock timing can change sample count. Each independent seed rotates seats. Bootstrap resamples complete matches."
+  },
+  "pairedHardVsMedium": {
+    "n": 200,
+    "mean": 398.3,
+    "confidence": 0.95,
+    "ci": [
+      344.9,
+      453.55
+    ]
+  },
+  "sameTableHardMinusMedium": {
+    "n": 200,
+    "mean": 348.5,
+    "confidence": 0.95,
+    "ci": [
+      256.6,
+      444.25
+    ]
+  },
+  "scenarios": {
+    "legacy/medium": {
+      "summary": {
+        "legacy": {
+          "score": {
+            "n": 200,
+            "mean": -422.15,
+            "confidence": 0.95,
+            "ci": [
+              -487.1,
+              -352.25
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.205,
+            "confidence": 0.95,
+            "ci": [
+              0.15,
+              0.26
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.075,
+            "confidence": 0.95,
+            "ci": [
+              0.04,
+              0.1125
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.07,
+            "confidence": 0.95,
+            "ci": [
+              0.035,
+              0.105
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 3.275,
+            "confidence": 0.95,
+            "ci": [
+              3.15,
+              3.395
+            ]
+          }
+        }
+      },
+      "illegal": 0
+    },
+    "easy/medium": {
+      "summary": {
+        "easy": {
+          "score": {
+            "n": 200,
+            "mean": -710.5,
+            "confidence": 0.95,
+            "ci": [
+              -775.3,
+              -647.05
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.06,
+            "confidence": 0.95,
+            "ci": [
+              0.03,
+              0.095
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.015,
+            "confidence": 0.95,
+            "ci": [
+              0,
+              0.035
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.015,
+            "confidence": 0.95,
+            "ci": [
+              0,
+              0.035
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 3.665,
+            "confidence": 0.95,
+            "ci": [
+              3.5775,
+              3.745
+            ]
+          }
+        }
+      },
+      "illegal": 0
+    },
+    "medium/medium": {
+      "summary": {
+        "medium": {
+          "score": {
+            "n": 200,
+            "mean": -8.25,
+            "confidence": 0.95,
+            "ci": [
+              -72.2,
+              57.8
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.515,
+            "confidence": 0.95,
+            "ci": [
+              0.445,
+              0.585
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.2225,
+            "confidence": 0.95,
+            "ci": [
+              0.1675,
+              0.28
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.22,
+            "confidence": 0.95,
+            "ci": [
+              0.165,
+              0.28
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 2.485,
+            "confidence": 0.95,
+            "ci": [
+              2.335,
+              2.63
+            ]
+          }
+        }
+      },
+      "illegal": 0
+    },
+    "hard/medium": {
+      "summary": {
+        "hard": {
+          "score": {
+            "n": 200,
+            "mean": 390.05,
+            "confidence": 0.95,
+            "ci": [
+              330.9,
+              448.55
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.82,
+            "confidence": 0.95,
+            "ci": [
+              0.765,
+              0.875
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.5725,
+            "confidence": 0.95,
+            "ci": [
+              0.505,
+              0.6425
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.57,
+            "confidence": 0.95,
+            "ci": [
+              0.5,
+              0.64
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 1.7025,
+            "confidence": 0.95,
+            "ci": [
+              1.575,
+              1.8325
+            ]
+          }
+        }
+      },
+      "illegal": 0
+    },
+    "mixed:hard-medium-easy-legacy": {
+      "summary": {
+        "hard": {
+          "score": {
+            "n": 200,
+            "mean": 648.2,
+            "confidence": 0.95,
+            "ci": [
+              592.4,
+              703.5
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.935,
+            "confidence": 0.95,
+            "ci": [
+              0.9,
+              0.965
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.7,
+            "confidence": 0.95,
+            "ci": [
+              0.635,
+              0.765
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.7,
+            "confidence": 0.95,
+            "ci": [
+              0.635,
+              0.765
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 1.385,
+            "confidence": 0.95,
+            "ci": [
+              1.295,
+              1.48
+            ]
+          }
+        },
+        "medium": {
+          "score": {
+            "n": 200,
+            "mean": 299.7,
+            "confidence": 0.95,
+            "ci": [
+              238.05,
+              357.65
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.75,
+            "confidence": 0.95,
+            "ci": [
+              0.69,
+              0.81
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.265,
+            "confidence": 0.95,
+            "ci": [
+              0.205,
+              0.325
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.265,
+            "confidence": 0.95,
+            "ci": [
+              0.205,
+              0.325
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 2.065,
+            "confidence": 0.95,
+            "ci": [
+              1.9575,
+              2.18
+            ]
+          }
+        },
+        "easy": {
+          "score": {
+            "n": 200,
+            "mean": -615.05,
+            "confidence": 0.95,
+            "ci": [
+              -684.9,
+              -548.75
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.12,
+            "confidence": 0.95,
+            "ci": [
+              0.08,
+              0.165
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.005,
+            "confidence": 0.95,
+            "ci": [
+              0,
+              0.015
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.005,
+            "confidence": 0.95,
+            "ci": [
+              0,
+              0.015
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 3.465,
+            "confidence": 0.95,
+            "ci": [
+              3.3675,
+              3.56
+            ]
+          }
+        },
+        "legacy": {
+          "score": {
+            "n": 200,
+            "mean": -332.85,
+            "confidence": 0.95,
+            "ci": [
+              -401.75,
+              -263.7
+            ]
+          },
+          "nonnegative": {
+            "n": 200,
+            "mean": 0.285,
+            "confidence": 0.95,
+            "ci": [
+              0.225,
+              0.35
+            ]
+          },
+          "firstShare": {
+            "n": 200,
+            "mean": 0.03,
+            "confidence": 0.95,
+            "ci": [
+              0.01,
+              0.055
+            ]
+          },
+          "soleFirst": {
+            "n": 200,
+            "mean": 0.03,
+            "confidence": 0.95,
+            "ci": [
+              0.01,
+              0.055
+            ]
+          },
+          "rank": {
+            "n": 200,
+            "mean": 3.085,
+            "confidence": 0.95,
+            "ci": [
+              2.9675,
+              3.2
+            ]
+          }
+        }
+      },
+      "illegal": 0
+    }
+  }
+}

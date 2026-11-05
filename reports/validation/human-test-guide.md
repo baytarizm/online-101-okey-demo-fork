@@ -24,3 +24,7 @@ Rakiplerin oyun sürerken gizli ellerini açmayın. Yalnız bir tahminin doğru 
 ## Değerlendirme
 
 Birden çok kişinin aynı tip hamleyi işaretlemesi durumunda önce açık bilgilerle mantıklı açıklaması olup olmadığını inceleyin; ardından sabit birim testi oluşturun. Strateji değişirse yeni, görülmemiş tohumlarla tekrar ölçün. Kişisel tercihi veya küçük bir seriyi güç artışı diye raporlamayın.
+
+## Başlangıç koşulu notu
+
+Yalıtılmış kart politikası simülasyonu ile masanın gerçek dağıtım/sözleşme akışını karıştırmayın. Özellikle Rıfkı seçiminde tek kupa papazı/as için yeniden dağıtım, gerçek oyunda uygulanır. Yeni sözleşme simülasyonu bu başlangıç koşulunu da sağlar; önceki sabit-sözleşme tablosunun birebir yeniden üretimi ayrıca işaretlenir.

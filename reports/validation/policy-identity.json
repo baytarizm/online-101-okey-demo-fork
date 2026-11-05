@@ -1,0 +1,16 @@
+{
+  "source": "fbcd904e53d4760f83a3857898d1fef4c3ce2ef0",
+  "policyFiles": [
+    "server/king.js",
+    "server/bots/index.js",
+    "server/bots/heuristic.js",
+    "server/bots/contracts.js",
+    "server/bots/information.js",
+    "server/bots/search.js",
+    "server/bots/legacy.js",
+    "server/bots/view.js",
+    "server/bots/config.js"
+  ],
+  "sha256": "817b4f53a513091bab2b15477e75d1558be5d0c5430ba66ecf385187747a4000",
+  "matchesSource": true
+}

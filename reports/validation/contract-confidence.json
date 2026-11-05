@@ -1,0 +1,184 @@
+{
+  "el": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-el-pairs.csv",
+    "before": -161.3,
+    "after": -145.575,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 15.725,
+      "confidence": 0.95,
+      "ci": [
+        13.175,
+        18.3
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 15.725,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        12.375,
+        19.2
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  },
+  "kupa": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-kupa-pairs.csv",
+    "before": -99.015,
+    "after": -80.265,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 18.75,
+      "confidence": 0.95,
+      "ci": [
+        16.08,
+        21.42
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 18.75,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        15.09,
+        22.5
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  },
+  "kiz": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-kiz-pairs.csv",
+    "before": -98.35,
+    "after": -81.7,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 16.65,
+      "confidence": 0.95,
+      "ci": [
+        13.4,
+        19.9
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 16.65,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        12.1,
+        21.1
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  },
+  "erkek": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-erkek-pairs.csv",
+    "before": -121.11,
+    "after": -96.72,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 24.39,
+      "confidence": 0.95,
+      "ci": [
+        21.48,
+        27.48
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 24.39,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        20.31,
+        28.68
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  },
+  "rifki": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-rifki-pairs.csv",
+    "before": -78.72,
+    "after": -59.84,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 18.88,
+      "confidence": 0.95,
+      "ci": [
+        13.92,
+        24
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 18.88,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        11.68,
+        25.92
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  },
+  "son": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-son-pairs.csv",
+    "before": -89.64,
+    "after": -19.53,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 70.11,
+      "confidence": 0.95,
+      "ci": [
+        63,
+        77.22
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 70.11,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        60.48,
+        79.83
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  },
+  "koz": {
+    "seed": 78001,
+    "rounds": 2000,
+    "rawCsv": "reports/validation/contract-koz-pairs.csv",
+    "before": 164.625,
+    "after": 166.45,
+    "pairedGain": {
+      "n": 2000,
+      "mean": 1.825,
+      "confidence": 0.95,
+      "ci": [
+        0.8,
+        2.85
+      ]
+    },
+    "familywiseGain": {
+      "n": 2000,
+      "mean": 1.825,
+      "confidence": 0.9928571428571429,
+      "ci": [
+        0.425,
+        3.275
+      ]
+    },
+    "evidence": "positive_after_seven_comparisons"
+  }
+}

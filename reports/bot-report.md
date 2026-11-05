@@ -1,6 +1,8 @@
 # King / Rıfkı bot geliştirme sonucu
 
-2026-11-05. Değişiklikler altı ayrı, test edilmiş commit halinde hazırlanmıştır. Oyun kuralları ve puanları değiştirilmemiştir.
+2026-11-05. İlk geliştirme altı ayrı, test edilmiş commit halinde hazırlanmıştır. Oyun kuralları ve puanları değiştirilmemiştir.
+
+Bu rapor ilk geliştirme ölçümlerini arşivler. **Skor >=0 başarısı birincilik değildir.** Doğrudan seviye karşılaştırmaları, sözleşme güven aralıkları ve yük sonuçları için [ikinci doğrulama raporuna](validation/report.md) bakın.
 
 ## Önce keşif
 
@@ -13,11 +15,11 @@
 3. **Sözleşme seçimi:** elin uzunluğu, kısalığı, void, kontrol kartları, kupa, kalan haklar ve skor değerlendirilir. Aynı seride +177,8 → +260; kazanma %70 → %77,5. 22 test.
 4. **Monte Carlo:** her yasal aday aynı örnek dağılımda sözleşme sonuna kadar oynatılır; eksik örnek grubu atılır. 12 örnek/25 ms eğitim ölçümünde +260 → +611,3; kazanma %77,5 → %97,5. İlk en kötü 404 ms ölçümü üzerine üretim araması ayrı worker'a taşındı; zaman aşımı ve iş yoğunluğu için sezgisel geri dönüş eklendi. 27 test.
 5. **Zorluk:** Kolay sınırlı geçmiş ve %35 rastgele yasal seçim; Orta tam sezgisel; Zor sezgisel + arama. Zorluk masa başında seçilir, sunucuda doğrulanır. Kolay seviyenin aynı seride −249 puan/%27,5 sonucu bilinçli olarak daha zayıftır; bir iyileşme iddiası değildir. 31 test.
-6. **Son doğrulama:** yeni tohumlar, bağımsız rakip rastgele akışları, eşlenik tam maçlar ve sözleşme bazlı kontrol. Kozda Orta seviye kaybı yalıtıldı: aşırı ihtiyatlı takip yerine kazanılabilir eli alma davranışı düzeltildi. Ayrı 300 dağıtımlı kontrolde bütün sözleşmelerin ortalama puanı başlangıçtan yüksek. Sonuçlar aşağıda.
+6. **Son doğrulama:** yeni tohumlar, bağımsız rakip rastgele akışları, eşlenik tam maçlar ve sözleşme bazlı kontrol. Kozda Orta seviye kaybı yalıtıldı: aşırı ihtiyatlı takip yerine kazanılabilir eli alma davranışı düzeltildi. Ayrı 300 dağıtımlı kontrolde yedi sözleşmenin örneklem ortalaması başlangıçtan yüksektir. Güven aralığı içermeyen bu tablo, özellikle koz için istatistiksel iyileşme kanıtı değildir. Sonuçlar aşağıda.
 
 Aşama 1–5 serileri geliştirme ölçümleridir. Nihai güç kıyasları 3001–3060 tohumlarıyla ve dört koltuğa dönüşümlü oturan bir adayın üç rakibe karşı oynadığı 60 tam maçla yapılmıştır. Her maç 20 sözleşmedir. Aşağıdaki beş önce/sonra senaryosu toplam 600 tam maç / **12.000 sözleşme** içerir; arama rollout'ları bu sayıya dahil değildir.
 
-## Son güç kıyası
+## İlk güç kıyası: tarihsel 60 maçlık seri
 
 | Aday | Üç rakip | Önce ort. puan | Sonra ort. puan | Önce kazanma | Sonra kazanma | Önce ceza/maç | Sonra ceza/maç | Yasadışı |
 |---|---|---:|---:|---:|---:|---:|---:|---:|

@@ -1,0 +1,464 @@
+{
+  "admissionLimits": {
+    "globalTables": 100,
+    "perIpTables": 10
+  },
+  "results": [
+    {
+      "tables": 50,
+      "poolSize": 1,
+      "mode": "burst",
+      "durationMs": 92.49788699999999,
+      "offeredDecisionsPerSecond": null,
+      "requests": 50,
+      "stats": {
+        "requests": 50,
+        "search": 1,
+        "noSamples": 0,
+        "busy": 49,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.02,
+      "fallbackFraction": 0.98,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 13.089596000000029,
+        "p95": 26.601805000000013,
+        "p99": 42.218734999999924,
+        "max": 42.218734999999924
+      },
+      "health": {
+        "requests": 2,
+        "errors": 0,
+        "p95Ms": 28.81633599999998,
+        "p99Ms": 28.81633599999998
+      },
+      "eventLoop": {
+        "p99Ms": 16.908287,
+        "maxMs": 16.908287
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 50,
+      "poolSize": 1,
+      "mode": "staggered",
+      "durationMs": 10056.069289000001,
+      "offeredDecisionsPerSecond": 16.666666666666668,
+      "requests": 168,
+      "stats": {
+        "requests": 168,
+        "search": 168,
+        "noSamples": 0,
+        "busy": 0,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 1,
+      "fallbackFraction": 0,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 36.331382000000076,
+        "p95": 38.11886299999969,
+        "p99": 45.40981300000021,
+        "max": 48.448163999999906
+      },
+      "health": {
+        "requests": 332,
+        "errors": 0,
+        "p95Ms": 3.4505730000000767,
+        "p99Ms": 5.543601999999737
+      },
+      "eventLoop": {
+        "p99Ms": 6.483967,
+        "maxMs": 22.347775
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 100,
+      "poolSize": 1,
+      "mode": "burst",
+      "durationMs": 95.17121899999984,
+      "offeredDecisionsPerSecond": null,
+      "requests": 100,
+      "stats": {
+        "requests": 100,
+        "search": 1,
+        "noSamples": 0,
+        "busy": 99,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.01,
+      "fallbackFraction": 0.99,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 21.86953100000028,
+        "p95": 41.62650500000018,
+        "p99": 44.31871400000091,
+        "max": 44.31871400000091
+      },
+      "health": {
+        "requests": 2,
+        "errors": 0,
+        "p95Ms": 2.0483000000003813,
+        "p99Ms": 2.0483000000003813
+      },
+      "eventLoop": {
+        "p99Ms": 5.459967,
+        "maxMs": 5.459967
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 100,
+      "poolSize": 1,
+      "mode": "staggered",
+      "durationMs": 10056.318466,
+      "offeredDecisionsPerSecond": 33.333333333333336,
+      "requests": 335,
+      "stats": {
+        "requests": 335,
+        "search": 169,
+        "noSamples": 0,
+        "busy": 166,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.5044776119402985,
+      "fallbackFraction": 0.4955223880597015,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 33.12656600000082,
+        "p95": 36.98889700000109,
+        "p99": 38.44977300000028,
+        "max": 40.08455200000026
+      },
+      "health": {
+        "requests": 333,
+        "errors": 0,
+        "p95Ms": 4.362638999999035,
+        "p99Ms": 6.670751000001474
+      },
+      "eventLoop": {
+        "p99Ms": 7.143423,
+        "maxMs": 13.484031
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 300,
+      "poolSize": 1,
+      "mode": "burst",
+      "durationMs": 165.6736979999987,
+      "offeredDecisionsPerSecond": null,
+      "requests": 300,
+      "stats": {
+        "requests": 300,
+        "search": 1,
+        "noSamples": 0,
+        "busy": 299,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.0033333333333333335,
+      "fallbackFraction": 0.9966666666666667,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 50.14848499999789,
+        "p95": 110.70141800000056,
+        "p99": 115.34921000000031,
+        "max": 116.24828300000081
+      },
+      "health": {
+        "requests": 2,
+        "errors": 0,
+        "p95Ms": 3.2119149999998626,
+        "p99Ms": 3.2119149999998626
+      },
+      "eventLoop": {
+        "p99Ms": 5.447679,
+        "maxMs": 5.447679
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 300,
+      "poolSize": 1,
+      "mode": "staggered",
+      "durationMs": 10035.344335000002,
+      "offeredDecisionsPerSecond": 100,
+      "requests": 1002,
+      "stats": {
+        "requests": 1002,
+        "search": 251,
+        "noSamples": 0,
+        "busy": 751,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.250499001996008,
+      "fallbackFraction": 0.749500998003992,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 0.4150320000007923,
+        "p95": 36.43003300000055,
+        "p99": 38.24329299999954,
+        "max": 43.77911900000254
+      },
+      "health": {
+        "requests": 332,
+        "errors": 0,
+        "p95Ms": 3.9693719999995665,
+        "p99Ms": 7.3153500000007625
+      },
+      "eventLoop": {
+        "p99Ms": 7.667711,
+        "maxMs": 16.924671
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 50,
+      "poolSize": 2,
+      "mode": "burst",
+      "durationMs": 87.26332399999956,
+      "offeredDecisionsPerSecond": null,
+      "requests": 50,
+      "stats": {
+        "requests": 50,
+        "search": 2,
+        "noSamples": 0,
+        "busy": 48,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.04,
+      "fallbackFraction": 0.96,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 10.872131999996782,
+        "p95": 16.759217999999237,
+        "p99": 37.209695999998075,
+        "max": 37.209695999998075
+      },
+      "health": {
+        "requests": 2,
+        "errors": 0,
+        "p95Ms": 2.0334880000009434,
+        "p99Ms": 2.0334880000009434
+      },
+      "eventLoop": {
+        "p99Ms": 5.406719,
+        "maxMs": 5.406719
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 50,
+      "poolSize": 2,
+      "mode": "staggered",
+      "durationMs": 10041.695775,
+      "offeredDecisionsPerSecond": 16.666666666666668,
+      "requests": 168,
+      "stats": {
+        "requests": 168,
+        "search": 168,
+        "noSamples": 0,
+        "busy": 0,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 1,
+      "fallbackFraction": 0,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 35.84414800000377,
+        "p95": 37.1694290000014,
+        "p99": 38.186883000002126,
+        "max": 40.5000149999978
+      },
+      "health": {
+        "requests": 332,
+        "errors": 0,
+        "p95Ms": 2.374203999999736,
+        "p99Ms": 4.665412999995169
+      },
+      "eventLoop": {
+        "p99Ms": 6.586367,
+        "maxMs": 13.754367
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 100,
+      "poolSize": 2,
+      "mode": "burst",
+      "durationMs": 91.57104799999797,
+      "offeredDecisionsPerSecond": null,
+      "requests": 100,
+      "stats": {
+        "requests": 100,
+        "search": 2,
+        "noSamples": 0,
+        "busy": 98,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.02,
+      "fallbackFraction": 0.98,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 21.58871000000363,
+        "p95": 37.765471999999136,
+        "p99": 41.37915900000371,
+        "max": 41.37915900000371
+      },
+      "health": {
+        "requests": 2,
+        "errors": 0,
+        "p95Ms": 5.429886999998416,
+        "p99Ms": 5.429886999998416
+      },
+      "eventLoop": {
+        "p99Ms": 5.890047,
+        "maxMs": 5.890047
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 100,
+      "poolSize": 2,
+      "mode": "staggered",
+      "durationMs": 10054.202038000003,
+      "offeredDecisionsPerSecond": 33.333333333333336,
+      "requests": 332,
+      "stats": {
+        "requests": 332,
+        "search": 328,
+        "noSamples": 1,
+        "busy": 3,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.9879518072289156,
+      "fallbackFraction": 0.012048192771084376,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 36.18707299999369,
+        "p95": 39.09169799999654,
+        "p99": 72.21388599999773,
+        "max": 107.97052899999835
+      },
+      "health": {
+        "requests": 329,
+        "errors": 0,
+        "p95Ms": 3.554584999998042,
+        "p99Ms": 13.94148700000369
+      },
+      "eventLoop": {
+        "p99Ms": 7.053311,
+        "maxMs": 92.930047
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 300,
+      "poolSize": 2,
+      "mode": "burst",
+      "durationMs": 392.41163199999573,
+      "offeredDecisionsPerSecond": null,
+      "requests": 300,
+      "stats": {
+        "requests": 300,
+        "search": 2,
+        "noSamples": 0,
+        "busy": 298,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.006666666666666667,
+      "fallbackFraction": 0.9933333333333333,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 82.83561799999734,
+        "p95": 326.5481299999956,
+        "p99": 337.91353900000104,
+        "max": 340.18418199999724
+      },
+      "health": {
+        "requests": 2,
+        "errors": 0,
+        "p95Ms": 1.3866219999981695,
+        "p99Ms": 1.3866219999981695
+      },
+      "eventLoop": {
+        "p99Ms": 5.615615,
+        "maxMs": 5.615615
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    },
+    {
+      "tables": 300,
+      "poolSize": 2,
+      "mode": "staggered",
+      "durationMs": 10035.207945000002,
+      "offeredDecisionsPerSecond": 100,
+      "requests": 1002,
+      "stats": {
+        "requests": 1002,
+        "search": 453,
+        "noSamples": 1,
+        "busy": 548,
+        "timeout": 0,
+        "error": 0,
+        "invalid": 0,
+        "closed": 0
+      },
+      "searchFraction": 0.45209580838323354,
+      "fallbackFraction": 0.5479041916167664,
+      "illegal": 0,
+      "moveMs": {
+        "p50": 3.111931999999797,
+        "p95": 41.81085500000336,
+        "p99": 86.85375100000238,
+        "max": 207.48067000000447
+      },
+      "health": {
+        "requests": 313,
+        "errors": 0,
+        "p95Ms": 9.928377999996883,
+        "p99Ms": 31.29272299999866
+      },
+      "eventLoop": {
+        "p99Ms": 17.596415,
+        "maxMs": 181.796863
+      },
+      "note": "Virtual public observations through the production BotRunner; isolated real HTTP health endpoint. Not 300 accepted rooms or a Render capacity guarantee."
+    }
+  ]
+}

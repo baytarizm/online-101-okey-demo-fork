@@ -40,7 +40,7 @@ Masa sahibi ana ekrandaki **Bot zorluğu** alanından seviyeyi seçer; çevrim i
 
 Zor seviye varsayılanı 24 dağıtım ve 35 ms hesap hedefidir. `BOT_MC_SAMPLES` (0–256), `BOT_MC_BUDGET_MS` (0–100 ms) sunucu ortamından ayarlanabilir. `BOT_DIFFICULTY` sunucu varsayılanıdır; mevcut istemci Orta seviyeyi önseçili gönderir. Kimliği doğrulanmamış istemci hesap bütçesini genişletemez.
 
-Arama sunucuda tek paylaşılan worker thread içinde çalışır. Yeni zor masada iş parçacığı önceden ısıtılır. Worker meşgulse sınırsız kuyruk oluşturulmaz; o hamlede sezgisel politika kullanılır. Hesap hedefini aşan iş için 120 ms ek watchdog payı vardır; hata, zaman aşımı veya geçersiz sonuçta yasal sezgisel hamleye dönülür. Sunucu eski sıra için gelen sonucu uygulatmaz. İşletim sistemi/GC duraklamaları nedeniyle bu hedefler gerçek zaman garantisi değildir.
+Arama sunucuda varsayılan olarak tek paylaşılan worker thread içinde çalışır. `BOT_WORKERS` 1–2 arasında sınırlıdır; varsayılan 1 korunur. İki worker seçimi, dağıtım yapılan makinede ayrıca yük ölçümü gerektirir. Yeni zor masada iş parçacığı önceden ısıtılır. Worker meşgulse sınırsız kuyruk oluşturulmaz; o hamlede sezgisel politika kullanılır. Hesap hedefini aşan iş için 120 ms ek watchdog payı vardır; hata, zaman aşımı veya geçersiz sonuçta yasal sezgisel hamleye dönülür. Sunucu eski sıra için gelen sonucu uygulatmaz. İşletim sistemi/GC duraklamaları nedeniyle bu hedefler gerçek zaman garantisi değildir.
 
 Olasılıklar IPF ile yaklaşık normalize edilir; determinize edilmiş dağılımlar void ve kalan kart sayısını tam sağlar, fakat bütün geçerli dağılımlar üzerinde tam uniform örnekleme garantisi vermez. Arama, kusursuz oyunu veya insanlara karşı belirli bir kazanma oranını garanti etmez. Eski checkpoint'te açık kart geçmişi eksikse o sözleşmede arama güvenli sezgisel seçime döner; sonraki dağıtımda tam takip başlar.
 
@@ -59,3 +59,18 @@ Arena, bir yeni botu üç eski/rastgele bota karşı, aynı dağıtım tohumlar�
 `--fixed-samples true` güç kıyasını tekrar üretmek için süre kesmesini kapatır; yalnız bu çevrimdışı testte örnek sayısı sabittir. Canlı uygulama bu modu kabul etmez ve zaman bütçesini uygular. Zaman sınırına bağlı kıyaslar makinenin yüküne göre farklı sayıda örnek tamamlayabilir. Performans testi üretim zaman bütçesini ayrıca ölçer. Telefon üzerinde fiziksel performans ölçümü yapılmamıştır; hesaplama zaten sunucudadır. Dört kat daraltılmış hesap payı yalnız stres yaklaşımıdır.
 
 Aşama raporları, keşif ve sonuçlar: [reports/bot-report.md](reports/bot-report.md).
+
+## İkinci doğrulama ve yük araçları
+
+Doğrudan seviye kıyasları, birincilik ve skor >=0 başarısının ayrımı, sözleşme güven aralıkları ve yük sınırları [ikinci raporda](reports/validation/report.md).
+
+```bash
+node scripts/bot-validation.js
+node scripts/bot-contract-confidence.js
+node scripts/bot-load.js
+node scripts/bot-socket-load.js
+```
+
+İlk komut beş senaryoda 200'er tam maç çalıştırır ve uzun sürebilir. Güç kıyasıyla yük testini eşzamanlı çalıştırmayın. Raporlar eski ölçüm dosyalarını yeniden kullanabilir; yeni politika ölçümü için ayrı plan/tohumlar ve yeni çıktı dizini gerekir. İlk rapordaki 60 maçlık seriler geliştirme geçmişidir; insan oyuncu kanıtı değildir.
+
+Canlı uygulamanın kabul sınırı 100 masa, IP başına 10 masadır. Socket yük aracı yalnız kendi yerel sunucusunun kabul sınırını 300'e çıkarır. Canlı sınır veya erişim politikası değişmez. Worker sayaçları yalnız sunucu nesnesindeki `botStats()` erişiminden okunur; yeni bir açık HTTP yolu veya kişisel telemetri yoktur. Sanal karar stresi ile gerçek Socket.IO masa testi ayrı raporlanır. Yerel testin CPU/belleği Render hizmetiyle eşdeğer sayılmaz.

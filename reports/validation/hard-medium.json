@@ -1,0 +1,3481 @@
+{
+  "scenario": "hard/medium",
+  "plan": {
+    "source": "fbcd904e53d4760f83a3857898d1fef4c3ce2ef0",
+    "seed": 48001,
+    "matches": 200,
+    "settings": {
+      "samples": 24,
+      "budgetMs": 35,
+      "fixedSamples": false
+    },
+    "scenarios": [
+      "legacy/medium",
+      "easy/medium",
+      "medium/medium",
+      "hard/medium",
+      "mixed:hard-medium-easy-legacy"
+    ],
+    "metrics": [
+      "mean score",
+      "nonnegative >=0",
+      "first place shared on tie",
+      "sole first",
+      "average rank"
+    ],
+    "note": "No bot policy tuning on these seeds. Production sample/time settings; wall-clock timing can change sample count. Each independent seed rotates seats. Bootstrap resamples complete matches."
+  },
+  "elapsedSeconds": 636.672205972,
+  "illegal": 0,
+  "summary": {
+    "hard": {
+      "score": {
+        "n": 200,
+        "mean": 390.05,
+        "confidence": 0.95,
+        "ci": [
+          330.9,
+          448.55
+        ]
+      },
+      "nonnegative": {
+        "n": 200,
+        "mean": 0.82,
+        "confidence": 0.95,
+        "ci": [
+          0.765,
+          0.875
+        ]
+      },
+      "firstShare": {
+        "n": 200,
+        "mean": 0.5725,
+        "confidence": 0.95,
+        "ci": [
+          0.505,
+          0.6425
+        ]
+      },
+      "soleFirst": {
+        "n": 200,
+        "mean": 0.57,
+        "confidence": 0.95,
+        "ci": [
+          0.5,
+          0.64
+        ]
+      },
+      "rank": {
+        "n": 200,
+        "mean": 1.7025,
+        "confidence": 0.95,
+        "ci": [
+          1.575,
+          1.8325
+        ]
+      }
+    }
+  },
+  "rows": [
+    {
+      "seed": 48001,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -540,
+        1440,
+        -680,
+        -220
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48002,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        690,
+        -1020,
+        320,
+        10
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48003,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        930,
+        -280,
+        -410,
+        -240
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48004,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        250,
+        -20,
+        360,
+        -590
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48005,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        380,
+        500,
+        20,
+        -900
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48006,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        20,
+        -1250,
+        250,
+        980
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48007,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        140,
+        -360,
+        -20,
+        240
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48008,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        1210,
+        -280,
+        -720,
+        -210
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48009,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        100,
+        200,
+        50,
+        -350
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48010,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -480,
+        -20,
+        620,
+        -120
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48011,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -330,
+        -80,
+        -360,
+        770
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48012,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        10,
+        -580,
+        1260,
+        -690
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48013,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        380,
+        -600,
+        510,
+        -290
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48014,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -300,
+        -230,
+        840,
+        -310
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48015,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -1520,
+        230,
+        840,
+        450
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48016,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        270,
+        -30,
+        -510,
+        270
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48017,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        50,
+        240,
+        -350,
+        60
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48018,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -210,
+        450,
+        370,
+        -610
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48019,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        50,
+        60,
+        -460,
+        350
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48020,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        500,
+        -290,
+        -170,
+        -40
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48021,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        220,
+        170,
+        70,
+        -460
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48022,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        570,
+        -920,
+        520,
+        -170
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48023,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -980,
+        -10,
+        130,
+        860
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48024,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        640,
+        -1320,
+        240,
+        440
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48025,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -340,
+        140,
+        -750,
+        950
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48026,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -150,
+        -600,
+        810,
+        -60
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48027,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        210,
+        -1360,
+        80,
+        1070
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48028,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -80,
+        -40,
+        620,
+        -500
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48029,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -870,
+        510,
+        200,
+        160
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48030,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        310,
+        -80,
+        440,
+        -670
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48031,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -160,
+        -20,
+        -190,
+        370
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48032,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        680,
+        -660,
+        60,
+        -80
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48033,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        330,
+        890,
+        -700,
+        -520
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48034,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -960,
+        90,
+        560,
+        310
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48035,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        390,
+        -500,
+        250,
+        -140
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48036,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        440,
+        -250,
+        -120,
+        -70
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48037,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -480,
+        440,
+        180,
+        -140
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48038,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        600,
+        270,
+        -370,
+        -500
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48039,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        0,
+        -170,
+        -440,
+        610
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48040,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        250,
+        1200,
+        -960,
+        -490
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48041,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -100,
+        660,
+        280,
+        -840
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48042,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        190,
+        -250,
+        580,
+        -520
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48043,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        570,
+        70,
+        -390,
+        -250
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48044,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        100,
+        -260,
+        160,
+        0
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48045,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        70,
+        240,
+        -120,
+        -190
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48046,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        380,
+        290,
+        -580,
+        -90
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48047,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        230,
+        150,
+        -980,
+        600
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48048,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        640,
+        -90,
+        -50,
+        -500
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48049,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -500,
+        910,
+        -410,
+        0
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48050,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -1340,
+        -130,
+        560,
+        910
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48051,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        620,
+        -550,
+        -20,
+        -50
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48052,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -270,
+        -320,
+        -10,
+        600
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48053,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        70,
+        -450,
+        -90,
+        470
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48054,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -120,
+        -480,
+        510,
+        90
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48055,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -660,
+        -260,
+        240,
+        680
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48056,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        390,
+        -730,
+        -740,
+        1080
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48057,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -590,
+        720,
+        140,
+        -270
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48058,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -280,
+        -360,
+        700,
+        -60
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48059,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -750,
+        890,
+        -90,
+        -50
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48060,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        350,
+        -880,
+        -240,
+        770
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48061,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -1360,
+        100,
+        1000,
+        260
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48062,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        160,
+        -580,
+        50,
+        370
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48063,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -250,
+        -560,
+        360,
+        450
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48064,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        560,
+        -660,
+        -150,
+        250
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48065,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        0,
+        340,
+        310,
+        -650
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48066,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -410,
+        -330,
+        470,
+        270
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48067,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        570,
+        -200,
+        -390,
+        20
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48068,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        190,
+        -60,
+        -150,
+        20
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48069,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -250,
+        150,
+        -250,
+        350
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48070,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -510,
+        680,
+        760,
+        -930
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48071,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -920,
+        -210,
+        620,
+        510
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48072,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        1110,
+        70,
+        -190,
+        -990
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48073,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -630,
+        590,
+        -40,
+        80
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48074,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -690,
+        -20,
+        660,
+        50
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48075,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -930,
+        560,
+        290,
+        80
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48076,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        380,
+        420,
+        -260,
+        -540
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48077,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -640,
+        470,
+        -60,
+        230
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48078,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        360,
+        370,
+        -50,
+        -680
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48079,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -190,
+        140,
+        -590,
+        640
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48080,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -80,
+        90,
+        -310,
+        300
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48081,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -720,
+        680,
+        160,
+        -120
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48082,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -980,
+        340,
+        870,
+        -230
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48083,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -570,
+        -200,
+        -110,
+        880
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48084,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        330,
+        -570,
+        170,
+        70
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48085,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -380,
+        910,
+        20,
+        -550
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48086,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -740,
+        480,
+        880,
+        -620
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48087,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -90,
+        20,
+        -780,
+        850
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48088,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        640,
+        550,
+        -480,
+        -710
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48089,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -580,
+        -570,
+        730,
+        420
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48090,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -300,
+        -380,
+        650,
+        30
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48091,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -560,
+        -280,
+        70,
+        770
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48092,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        700,
+        -20,
+        -420,
+        -260
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48093,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        90,
+        70,
+        -240,
+        80
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48094,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -110,
+        -560,
+        280,
+        390
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48095,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -120,
+        80,
+        -620,
+        660
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48096,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        920,
+        -60,
+        -510,
+        -350
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48097,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -740,
+        -100,
+        240,
+        600
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48098,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        660,
+        -1490,
+        20,
+        810
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48099,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -460,
+        620,
+        -150,
+        -10
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48100,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        630,
+        -550,
+        -10,
+        -70
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48101,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        660,
+        -600,
+        290,
+        -350
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48102,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -350,
+        -280,
+        1050,
+        -420
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48103,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -670,
+        -50,
+        700,
+        20
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48104,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        270,
+        -350,
+        -470,
+        550
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48105,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        120,
+        -40,
+        -150,
+        70
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48106,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -750,
+        840,
+        390,
+        -480
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48107,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        30,
+        -130,
+        -510,
+        610
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48108,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        940,
+        -530,
+        -110,
+        -300
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48109,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -240,
+        530,
+        -270,
+        -20
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48110,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -1170,
+        460,
+        210,
+        500
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48111,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        670,
+        -1270,
+        70,
+        530
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48112,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -200,
+        170,
+        -410,
+        440
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48113,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        20,
+        560,
+        -620,
+        40
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48114,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        430,
+        -180,
+        500,
+        -750
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48115,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        80,
+        -710,
+        620,
+        10
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48116,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        370,
+        -320,
+        270,
+        -320
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48117,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -70,
+        260,
+        90,
+        -280
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48118,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -770,
+        100,
+        670,
+        0
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48119,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        350,
+        220,
+        -1500,
+        930
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48120,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        130,
+        -360,
+        -280,
+        510
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48121,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -680,
+        1210,
+        -920,
+        390
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48122,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        30,
+        -200,
+        140,
+        30
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48123,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        390,
+        130,
+        -530,
+        10
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48124,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        730,
+        -670,
+        -600,
+        540
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48125,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -860,
+        30,
+        340,
+        490
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48126,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        360,
+        -950,
+        1250,
+        -660
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48127,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        700,
+        -780,
+        -520,
+        600
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48128,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        1130,
+        -760,
+        -730,
+        360
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48129,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        30,
+        610,
+        -200,
+        -440
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48130,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -650,
+        -280,
+        780,
+        150
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48131,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -460,
+        40,
+        30,
+        390
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48132,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        1050,
+        -910,
+        20,
+        -160
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48133,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        710,
+        450,
+        -80,
+        -1080
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48134,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -30,
+        220,
+        610,
+        -800
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48135,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        390,
+        -600,
+        -310,
+        520
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48136,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -80,
+        -290,
+        -30,
+        400
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48137,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -40,
+        -720,
+        680,
+        80
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48138,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -1390,
+        610,
+        300,
+        480
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48139,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        610,
+        -60,
+        -740,
+        190
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48140,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        670,
+        150,
+        -190,
+        -630
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48141,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        520,
+        -210,
+        -490,
+        180
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48142,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -290,
+        30,
+        540,
+        -280
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48143,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        50,
+        -510,
+        600,
+        -140
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48144,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        1020,
+        -70,
+        -510,
+        -440
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48145,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        150,
+        370,
+        -370,
+        -150
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48146,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        720,
+        -880,
+        -50,
+        210
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48147,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -1240,
+        610,
+        700,
+        -70
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48148,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -220,
+        -100,
+        -200,
+        520
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48149,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -530,
+        740,
+        -240,
+        30
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48150,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -1140,
+        240,
+        650,
+        250
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48151,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -250,
+        50,
+        -390,
+        590
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48152,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        220,
+        -140,
+        -110,
+        30
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48153,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        140,
+        750,
+        -590,
+        -300
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48154,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -60,
+        130,
+        110,
+        -180
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48155,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -250,
+        110,
+        80,
+        60
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48156,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        350,
+        160,
+        30,
+        -540
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48157,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -20,
+        -70,
+        740,
+        -650
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48158,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        70,
+        -360,
+        710,
+        -420
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48159,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -450,
+        120,
+        -130,
+        460
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48160,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        420,
+        -940,
+        650,
+        -130
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48161,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        330,
+        1060,
+        -630,
+        -760
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48162,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        310,
+        220,
+        -650,
+        120
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48163,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -280,
+        -600,
+        960,
+        -80
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48164,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        1360,
+        -770,
+        -540,
+        -50
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48165,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -140,
+        720,
+        -670,
+        90
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48166,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -20,
+        280,
+        160,
+        -420
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48167,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -280,
+        70,
+        -650,
+        860
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48168,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        680,
+        -110,
+        -450,
+        -120
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48169,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -910,
+        130,
+        40,
+        740
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48170,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -260,
+        -130,
+        1080,
+        -690
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48171,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -230,
+        300,
+        310,
+        -380
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48172,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        150,
+        -40,
+        740,
+        -850
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48173,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        220,
+        -640,
+        -140,
+        560
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48174,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        170,
+        490,
+        640,
+        -1300
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48175,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -100,
+        -40,
+        -30,
+        170
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48176,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        190,
+        850,
+        -430,
+        -610
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48177,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -350,
+        210,
+        650,
+        -510
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48178,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -510,
+        -20,
+        950,
+        -420
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48179,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        1190,
+        -960,
+        -410,
+        180
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48180,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -230,
+        380,
+        -790,
+        640
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48181,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -800,
+        780,
+        -430,
+        450
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48182,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        360,
+        -310,
+        670,
+        -720
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48183,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        230,
+        620,
+        -680,
+        -170
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48184,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        420,
+        540,
+        490,
+        -1450
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48185,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        80,
+        -240,
+        190,
+        -30
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48186,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -290,
+        -370,
+        480,
+        180
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48187,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        30,
+        -250,
+        -360,
+        580
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48188,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        460,
+        330,
+        -790,
+        0
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48189,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -380,
+        780,
+        -450,
+        50
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48190,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -130,
+        -190,
+        360,
+        -40
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48191,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        -820,
+        410,
+        -90,
+        500
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48192,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        150,
+        -660,
+        170,
+        340
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48193,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        430,
+        480,
+        -150,
+        -760
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48194,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        170,
+        -150,
+        390,
+        -410
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48195,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        420,
+        -1650,
+        0,
+        1230
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48196,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -130,
+        -680,
+        680,
+        130
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48197,
+      "seat": 1,
+      "levels": [
+        "medium",
+        "hard",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        50,
+        840,
+        -1220,
+        330
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48198,
+      "seat": 2,
+      "levels": [
+        "medium",
+        "medium",
+        "hard",
+        "medium"
+      ],
+      "scores": [
+        -580,
+        -260,
+        170,
+        670
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48199,
+      "seat": 3,
+      "levels": [
+        "medium",
+        "medium",
+        "medium",
+        "hard"
+      ],
+      "scores": [
+        30,
+        -180,
+        -320,
+        470
+      ],
+      "illegal": 0
+    },
+    {
+      "seed": 48200,
+      "seat": 0,
+      "levels": [
+        "hard",
+        "medium",
+        "medium",
+        "medium"
+      ],
+      "scores": [
+        -260,
+        360,
+        -590,
+        490
+      ],
+      "illegal": 0
+    }
+  ]
+}
