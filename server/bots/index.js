@@ -6,7 +6,7 @@ function chooseCard(view,options={}){
   if(config.random()<config.mistakeRate)return view.legal[Math.floor(config.random()*view.legal.length)];
   const limited={...view,played:[]};return heuristic.rankCards(limited,{info:knowledge(limited,{limited:true})})[0].card;
  }
- return config.difficulty==='hard'?search(view,config).card:heuristic.chooseCard(view);
+ return config.difficulty==='hard'?search(view,{...config,now:options.now}).card:heuristic.chooseCard(view);
 }
 function chooseContract(view,options={}){const config=settings(options);if(config.difficulty==='easy'&&config.random()<config.mistakeRate)return {type:view.options[Math.floor(config.random()*view.options.length)],trump:['S','H','D','C'][Math.floor(config.random()*4)]};return contracts.chooseContract(view);}
 module.exports={chooseCard,chooseContract,settings};

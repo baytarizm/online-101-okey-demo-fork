@@ -1,0 +1,51 @@
+{
+  "el": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": -152,
+    "after": -135.83333333333334,
+    "gain": 16.166666666666668
+  },
+  "kupa": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": -86.8,
+    "after": -66.3,
+    "gain": 20.5
+  },
+  "kiz": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": -95.66666666666667,
+    "after": -74,
+    "gain": 21.666666666666668
+  },
+  "erkek": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": -112.6,
+    "after": -91.6,
+    "gain": 21
+  },
+  "rifki": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": -67.2,
+    "after": -45.86666666666667,
+    "gain": 21.333333333333332
+  },
+  "son": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": -80.4,
+    "after": -22.2,
+    "gain": 58.2
+  },
+  "koz": {
+    "seed": 9001,
+    "identicalDeals": 300,
+    "before": 162.16666666666666,
+    "after": 165.83333333333334,
+    "gain": 3.6666666666666665
+  }
+}

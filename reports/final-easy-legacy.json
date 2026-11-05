@@ -1,0 +1,61 @@
+{
+  "seed": 3001,
+  "candidate": "easy",
+  "opponent": "legacy",
+  "settings": {
+    "samples": 12,
+    "budgetMs": 35,
+    "fixedSamples": true
+  },
+  "before": {
+    "matches": 60,
+    "rounds": 1200,
+    "averageScore": -167.83333333333334,
+    "averagePenaltyPerMatch": 1421.1666666666667,
+    "winRate": 0.3333333333333333,
+    "illegal": 0,
+    "decisionMs": {
+      "p50": 0.0010929999999689244,
+      "p95": 0.003070999999636115,
+      "max": 1.3678529999999682
+    },
+    "byContract": {
+      "el": -166.25,
+      "kupa": -106,
+      "kiz": -106.66666666666667,
+      "erkek": -126.5,
+      "rifki": -74.66666666666667,
+      "son": -130.5,
+      "koz": 156.66666666666666
+    }
+  },
+  "after": {
+    "matches": 60,
+    "rounds": 1200,
+    "averageScore": -308.1666666666667,
+    "averagePenaltyPerMatch": 1431.5,
+    "winRate": 0.2833333333333333,
+    "illegal": 0,
+    "decisionMs": {
+      "p50": 0.035763000000315515,
+      "p95": 0.2656450000001769,
+      "max": 8.063264000000117
+    },
+    "byContract": {
+      "el": -177.08333333333334,
+      "kupa": -108.5,
+      "kiz": -140,
+      "erkek": -136,
+      "rifki": -98.66666666666667,
+      "son": -55.5,
+      "koz": 140.41666666666666
+    }
+  },
+  "pairedScoreGain": {
+    "mean": -140.33333333333334,
+    "ci95": [
+      -268.36335946082875,
+      -12.30330720583791
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 'use strict';
-const K=require('../king');const {knowledge}=require('./information');
+const K=require('../king');const Legacy=require('./legacy');const {knowledge}=require('./information');
 const rank=id=>Number(id.slice(1));const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
 function probAny(ids,p,info){let none=1;for(const id of ids)none*=1-(info.probabilities[id]?.[p]||0);return 1-none;}
 function riskFeatures(view,id,info){
@@ -24,9 +24,9 @@ function riskFeatures(view,id,info){
  const visible=trick.filter(x=>K.penalty(x.card,type)).length*Math.abs(K.TYPES[type].rate);
  if(visible)penaltyChance=1;
  let cost=visible+futurePenalty;
- if(type==='el')cost=50;
- if(type==='son')cost=(view.trickNo||0)>=11?180:0;
- return {winProbability:clamp(winProbability),penaltyProbability:penaltyChance,penaltyValue:cost,expectedPenalty:winProbability*cost,remaining};
+ if(type==='el'){cost=50;penaltyChance=1;}
+ if(type==='son'){cost=(view.trickNo||0)>=11?180:0;penaltyChance=cost?1:0;}
+ return {winProbability:clamp(winProbability),penaltyProbability:penaltyChance,penaltyValue:penaltyChance?cost/penaltyChance:0,expectedPenalty:winProbability*penaltyChance*(penaltyChance?cost/penaltyChance:0),remaining};
 }
 function rankCards(view,{info=knowledge(view)}={}){
  const hand=view.hand,type=view.contract,trump=view.trump,n=hand.length,played=view.played||[];
@@ -41,6 +41,7 @@ function rankCards(view,{info=knowledge(view)}={}){
    utility=features.winProbability*50;
    // Do not waste a high winner when a lower card already wins the trick.
    utility-=features.winProbability*(r-2)*.9;
+   if(view.trick.length){const winsNow=K.winner([...view.trick,{player:view.player,card:id}],trump)===view.player;utility+=winsNow?35:0;}
    if(!view.trick.length){
     utility+=suit===trump&&ours>=top.length/3&&higher===0?14:0;
     utility+=suit!==trump?length*2+clamp((r-10)/4)*6:0;
@@ -72,5 +73,19 @@ function rankCards(view,{info=knowledge(view)}={}){
   return {card:id,utility,...features};
  }).sort((a,b)=>b.utility-a.utility||view.legal.indexOf(a.card)-view.legal.indexOf(b.card));
 }
-function chooseCard(view){if(view.legal.length===1)return view.legal[0];return rankCards(view)[0]?.card;}
+function chooseCard(view){
+ if(view.legal.length===1)return view.legal[0];
+ if(view.contract==='koz'){
+  // Do not sacrifice a currently winning follow card merely because later players might beat it.
+  if(view.trick.length)return Legacy.chooseCard(view);
+  const info=knowledge(view),masters=view.legal.filter(id=>!info.unseen.some(c=>c[0]===id[0]&&rank(c)>rank(id)));
+  const ownTrumps=view.hand.filter(c=>c[0]===view.trump).length,remainingTrumps=info.unseen.filter(c=>c[0]===view.trump).length;
+  const masterTrump=masters.find(c=>c[0]===view.trump);
+  if(masterTrump&&ownTrumps>=remainingTrumps/3)return masterTrump;
+  const side=masters.filter(c=>c[0]!==view.trump&&!info.voids.some((v,p)=>p!==view.player&&v.has(c[0])&&probAny(info.unseen.filter(x=>x[0]===view.trump),p,info)>0));
+  if(side.length)return side.sort((a,b)=>view.hand.filter(c=>c[0]===b[0]).length-view.hand.filter(c=>c[0]===a[0]).length)[0];
+  return Legacy.chooseCard(view);
+ }
+ return rankCards(view)[0]?.card;
+}
 module.exports={rankCards,chooseCard,riskFeatures};

@@ -1,0 +1,29 @@
+{
+  "runtime": "v24.22.1",
+  "platform": "linux",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "searchBudgetMs": 35,
+  "watchdogGraceMs": 120,
+  "serverSearch": {
+    "decisions": 38,
+    "p50Ms": 35.00948099999994,
+    "p95Ms": 36.09775599999989,
+    "maxMs": 41.60682100000008,
+    "averageSamples": 18.42105263157895,
+    "fallbacks": 0
+  },
+  "quarterComputeBudget": {
+    "decisions": 38,
+    "p50Ms": 8.80511100000001,
+    "p95Ms": 9.447545999999988,
+    "maxMs": 9.545957999999928,
+    "averageSamples": 9.473684210526315,
+    "fallbacks": 1
+  },
+  "worker": {
+    "decisions": 19,
+    "maxWallMs": 43.39681099999984,
+    "heartbeatTicks": 225
+  },
+  "note": "Server CPU benchmark; quarterComputeBudget simulates a tighter compute allowance, not a physical phone. Worker heartbeat verifies the web event loop remains responsive. JS/OS pauses can exceed cooperative CPU deadlines."
+}

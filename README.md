@@ -27,3 +27,35 @@ Masalar varsayılan RAM'dedir: yeniden başlatma/ücretsiz Render uykusu masalar
 ## Doğrulama
 
 `npm test`: legal kart, renk/koz/ceza zorunlulukları, Rıfkı erken bitişi, 100 tam maçta kota ve toplam puan, dört gerçek Socket.IO istemcisi, özel eller, sıra kontrolü, duraklama/geri dönüş ve bot ilerlemesi.
+
+## Bot zekâsı ve zorluk seviyeleri
+
+Botlar `server/bots/` altında oyun motorundan ayrıdır. `view.js` tek veri sınırıdır: botlara sadece kendi eli, açık kart geçmişi, kalan kart adetleri, skor ve seçim hakları verilir. Rakip elleri bu sınırdan geçmez. `king.js` motorunun dağıtım, legal hamle, puan ve sözleşme kuralları korunur; sadece kamuya açık hamle günlüğü eklenir.
+
+- **Kolay:** geçmiş kart/void takibi sınırlı; %35 olasılıkla rastgele **yasal** seçim. Rastgele seçim her zaman kötü hamle demek değildir.
+- **Orta (varsayılan):** tam açık kart/void takibi, yaklaşık kart-sahipliği olasılıkları, sözleşmeye özel risk, güvenli kart boşaltma, Rıfkı koruma/sıkıştırma, Son İki için küçük kart rezervi, koz sayımı ve uzun renk.
+- **Zor:** aynı bilgi sınırı ve sezgiseller + void ve kart adetlerine uygun rastgele dağıtımlarda bütün adayları sözleşme sonuna kadar oynatan Monte Carlo araması. İlk sezgisel değerlendirmeye küçük bir öncelik ağırlığı verilir.
+
+Masa sahibi ana ekrandaki **Bot zorluğu** alanından seviyeyi seçer; çevrim içi masanın boş koltuklarına eklenecek botlar da bu seviyeyi kullanır. Masa başladıktan sonra seviye değiştirilmez. Oturum dönüşünde seçim korunur.
+
+Zor seviye varsayılanı 24 dağıtım ve 35 ms hesap hedefidir. `BOT_MC_SAMPLES` (0–256), `BOT_MC_BUDGET_MS` (0–100 ms) sunucu ortamından ayarlanabilir. `BOT_DIFFICULTY` sunucu varsayılanıdır; mevcut istemci Orta seviyeyi önseçili gönderir. Kimliği doğrulanmamış istemci hesap bütçesini genişletemez.
+
+Arama sunucuda tek paylaşılan worker thread içinde çalışır. Yeni zor masada iş parçacığı önceden ısıtılır. Worker meşgulse sınırsız kuyruk oluşturulmaz; o hamlede sezgisel politika kullanılır. Hesap hedefini aşan iş için 120 ms ek watchdog payı vardır; hata, zaman aşımı veya geçersiz sonuçta yasal sezgisel hamleye dönülür. Sunucu eski sıra için gelen sonucu uygulatmaz. İşletim sistemi/GC duraklamaları nedeniyle bu hedefler gerçek zaman garantisi değildir.
+
+Olasılıklar IPF ile yaklaşık normalize edilir; determinize edilmiş dağılımlar void ve kalan kart sayısını tam sağlar, fakat bütün geçerli dağılımlar üzerinde tam uniform örnekleme garantisi vermez. Arama, kusursuz oyunu veya insanlara karşı belirli bir kazanma oranını garanti etmez. Eski checkpoint'te açık kart geçmişi eksikse o sözleşmede arama güvenli sezgisel seçime döner; sonraki dağıtımda tam takip başlar.
+
+### Tekrarlanabilir ölçüm
+
+```bash
+npm test
+npm run bots:arena -- --matches 60 --seed 3001 --candidate hard --opponent legacy --samples 12 --fixed-samples true --out reports/example.json
+npm run bots:arena -- --matches 60 --seed 3001 --candidate medium --opponent random
+node scripts/bot-contract-arena.js 300 reports/fixed-contracts.json
+npm run bots:perf -- reports/performance.json
+```
+
+Arena, bir yeni botu üç eski/rastgele bota karşı, aynı dağıtım tohumları ve dönüşümlü koltuklarla 20 oyunluk tam maçlarda değerlendirir. Önceki bot `legacy.js` içinde dondurulmuştur. Skor, toplam ceza, gerçek maç kazanma oranı (>=0), yasadışı hamle ve hamle süreleri raporlanır. Aynı dağıtım çiftlerinin puan farkı için yaklaşık %95 güven aralığı hesaplanır. Rakiplerin ve adayın rastgele sayı akışları ayrıdır.
+
+`--fixed-samples true` güç kıyasını tekrar üretmek için süre kesmesini kapatır; yalnız bu çevrimdışı testte örnek sayısı sabittir. Canlı uygulama bu modu kabul etmez ve zaman bütçesini uygular. Zaman sınırına bağlı kıyaslar makinenin yüküne göre farklı sayıda örnek tamamlayabilir. Performans testi üretim zaman bütçesini ayrıca ölçer. Telefon üzerinde fiziksel performans ölçümü yapılmamıştır; hesaplama zaten sunucudadır. Dört kat daraltılmış hesap payı yalnız stres yaklaşımıdır.
+
+Aşama raporları, keşif ve sonuçlar: [reports/bot-report.md](reports/bot-report.md).

@@ -1,0 +1,44 @@
+{
+  "el": {
+    "identicalDeals": 100,
+    "before": -186.5,
+    "after": -164,
+    "gain": 22.5
+  },
+  "kupa": {
+    "identicalDeals": 100,
+    "before": -94.8,
+    "after": -76.2,
+    "gain": 18.6
+  },
+  "kiz": {
+    "identicalDeals": 100,
+    "before": -107,
+    "after": -94,
+    "gain": 13
+  },
+  "erkek": {
+    "identicalDeals": 100,
+    "before": -133.8,
+    "after": -123,
+    "gain": 10.8
+  },
+  "rifki": {
+    "identicalDeals": 100,
+    "before": -80,
+    "after": -64,
+    "gain": 16
+  },
+  "son": {
+    "identicalDeals": 100,
+    "before": -106.2,
+    "after": -27,
+    "gain": 79.2
+  },
+  "koz": {
+    "identicalDeals": 100,
+    "before": 169,
+    "after": 154,
+    "gain": -15
+  }
+}
