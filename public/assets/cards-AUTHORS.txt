@@ -1,0 +1,9 @@
+David Bellot <david.bellot@free.fr>
+Huub de Beer <Huub@heerdebeer.org>
+desphilboy
+Thomas Linard
+rhorns
+
+Source: https://github.com/htdebeer/SVG-cards (SVG-cards 4.0.2)
+Modified 2026-11-05: replaced inline CSS style declarations with equivalent SVG presentation attributes to support the application Content Security Policy. Card artwork is unchanged.
+The editable SVG source and LGPL 2.1 license are distributed alongside this notice.

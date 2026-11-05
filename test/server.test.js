@@ -6,3 +6,21 @@ test('bot table advances using a human legal move and bots; legacy 101 sockets a
 test('table difficulty is validated on the server and visible after resume',async t=>{const svc=await setup(t);const s=await svc.client();let state;s.on('state',v=>state=v);await emit(s,'joinGame',{create:true,playerName:'Seviye',botDifficulty:'hard'});assert.equal(state.botDifficulty,'hard');await emit(s,'startWithBots');assert.equal(state.players.filter(p=>p.isBot).length,3);assert.equal(state.botDifficulty,'hard');});
 test('hard bots complete a trick through the worker and reconnect retains difficulty',async t=>{const svc=await setup(t),s=await svc.client();let state,session;s.on('state',v=>state=v);s.on('session',v=>session=v);await emit(s,'joinGame',{create:true,withBots:true,playerName:'Zor Test',botDifficulty:'hard'});await emit(s,'chooseContract',{type:'el'});const completed=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Zor botlar bekledi')),5000);s.on('state',function check(v){if(v.lastTrick){clearTimeout(timeout);s.off('state',check);resolve(v);}});});await emit(s,'playCard',{card:state.legal[0]});assert.equal((await completed).lastTrick.cards.length,4);s.disconnect();const next=await svc.client(),snapshot=once(next,'state');await emit(next,'resume',session);assert.equal((await snapshot).botDifficulty,'hard');});
 test('production admission defaults stay at ten tables per IP; metrics expose only counters',async t=>{const svc=await setup(t);for(let i=0;i<11;i++){const s=await svc.client();const result=await emit(s,'joinGame',{create:true,playerName:'Limit '+i});assert.equal(result.ok,i<10);}assert.equal(svc.rooms.size,10);assert.deepEqual(Object.keys(svc.botStats()).sort(),['requests','search','noSamples','busy','timeout','error','invalid','closed'].sort());});
+
+test('confirmed exit closes a solo bot table and invalidates its saved session',async t=>{
+ const svc=await setup(t),s=await svc.client();let session;s.on('session',v=>session=v);
+ await emit(s,'joinGame',{create:true,withBots:true,playerName:'Çıkış'});
+ const expired=once(s,'sessionExpired');assert.equal((await emit(s,'leaveRoom')).ok,true);await expired;
+ assert.equal(svc.rooms.size,0);
+ const other=await svc.client(),gone=once(other,'sessionExpired');await emit(other,'resume',session);await gone;assert.equal(svc.rooms.size,0);
+});
+test('online exit gives the seat to a bot and transfers host controls to the remaining human',async t=>{
+ const svc=await setup(t,{botDelay:1000}),a=await svc.client(),b=await svc.client();let session,state;
+ a.on('session',v=>session=v);b.on('state',v=>state=v);
+ await emit(a,'joinGame',{create:true,playerName:'İlk'});await emit(b,'joinGame',{roomCode:session.roomCode,playerName:'İkinci'});await emit(a,'startWithBots');
+ const changed=new Promise(resolve=>{b.on('state',function check(v){if(v.players[0].isBot){b.off('state',check);resolve(v);}});});
+ assert.equal((await emit(a,'leaveRoom')).ok,true);state=await changed;
+ assert.equal(state.host,true);assert.equal(state.paused,false);assert.equal(state.players[0].name,'Bot Koyun');assert.equal(state.players[0].cardCount,13);
+ const old=await svc.client(),expired=once(old,'sessionExpired');await emit(old,'resume',session);await expired;
+ assert.equal((await emit(b,'leaveRoom')).ok,true);assert.equal(svc.rooms.size,0);
+});
