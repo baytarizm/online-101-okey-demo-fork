@@ -1,5 +1,6 @@
 'use strict';
 const express=require('express');const http=require('node:http');const crypto=require('node:crypto');const path=require('node:path');const fs=require('node:fs');const {Server}=require('socket.io');const K=require('./king');
+const Bots=require('./bots');const {fromGame:botView}=require('./bots/view');
 const hash=v=>crypto.createHash('sha256').update(v).digest('hex');
 function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=process.env.STATE_FILE,roomTtl=30*60_000}={}){
  const app=express(),server=http.createServer(app),io=new Server(server,{maxHttpBufferSize:4096}),rooms=new Map(),timers=new Map();
@@ -16,7 +17,7 @@ function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=p
  r.deadline=Date.now()+delay;
  const timer=setTimeout(()=>{timers.delete(r.code);if(rooms.get(r.code)!==r||!ready(r))return;try{if(g.phase==='trick')K.advance(g);else auto(r);broadcast(r);}catch(e){console.error('King sıra hatası:',e.message);}},delay);timer.unref();timers.set(r.code,timer);
  }
- function auto(r){const g=r.game,p=g.current;if(g.phase==='choosing'){const choice=K.botChoice(g,p);K.choose(g,p,choice.type,choice.trump);}else if(g.phase==='playing')K.play(g,p,K.botCard({player:p,hand:g.hands[p],legal:K.legal(g,p),contract:g.contract,trump:g.trump,trick:g.trick}));}
+ function auto(r){const g=r.game,p=g.current;if(g.phase==='choosing'){const choice=Bots.chooseContract(botView(g,p));K.choose(g,p,choice.type,choice.trump);}else if(g.phase==='playing')K.play(g,p,Bots.chooseCard(botView(g,p)));}
  function broadcast(r){r.updatedAt=Date.now();schedule(r);for(let i=0;i<r.players.length;i++)if(r.players[i].socketId)io.to(r.players[i].socketId).emit('state',snapshot(r,i));persist();}
  function start(r){if(r.players.length!==4||!ready(r))throw Error('Dört oyuncu bağlı olmalı.');r.game=K.create();}
  const sweep=setInterval(()=>{for(const [code,r] of rooms)if(r.players.every(p=>!p.socketId)&&Date.now()-r.updatedAt>roomTtl){clearTimeout(timers.get(code));timers.delete(code);rooms.delete(code);}persist();},60000);sweep.unref();

@@ -7,7 +7,7 @@ const deck=()=>SUITS.flatMap(s=>Array.from({length:13},(_,i)=>s+(i+2)));
 function deal(g){
  const cards=deck();for(let i=51;i>0;i--){const j=crypto.randomInt(i+1);[cards[i],cards[j]]=[cards[j],cards[i]];}
  g.hands=Array.from({length:4},(_,i)=>cards.slice(i*13,i*13+13).sort((a,b)=>SUITS.indexOf(a[0])-SUITS.indexOf(b[0])||card(a).rank-card(b).rank));
- g.owner=g.round%4;g.current=g.owner;g.contract=null;g.trump=null;g.trick=[];g.lastTrick=null;g.trickNo=0;g.broken=false;g.counts=[0,0,0,0];g.phase='choosing';
+ g.owner=g.round%4;g.current=g.owner;g.contract=null;g.trump=null;g.trick=[];g.lastTrick=null;g.trickNo=0;g.broken=false;g.counts=[0,0,0,0];g.phase='choosing';g.played=[];
 }
 function create(){const g={round:0,history:[],scores:[0,0,0,0]};deal(g);return g;}
 function options(g){if(g.phase!=='choosing')return [];const owned=g.history.filter(r=>r.owner===g.owner);return Object.keys(TYPES).filter(t=>t==='koz'?g.round>=4&&owned.filter(r=>r.type==='koz').length<2:owned.filter(r=>r.type!=='koz').length<3&&g.history.filter(r=>r.type===t).length<2);}
@@ -39,6 +39,7 @@ function legal(g,p){
 }
 function play(g,p,id){
  if(!legal(g,p).includes(id))throw Error('Bu kart oynanamaz. Renk ve zorunlu kart kuralını izleyin.');
+ g.played ||= [];g.played.push({player:p,card:id,lead:g.trick[0]?.card[0]||id[0],trick:g.trickNo});
  g.hands[p].splice(g.hands[p].indexOf(id),1);g.trick.push({player:p,card:id});
  if(id[0]===(g.contract==='koz'?g.trump:'H'))g.broken=true;
  if(g.trick.length<4){g.current=(p+1)%4;return;}
@@ -56,19 +57,6 @@ function advance(g){
  g.phase=g.round===20?'finished':'roundEnd';
 }
 function next(g){if(g.phase!=='roundEnd')throw Error('Yeni oyuna geçilemez.');deal(g);}
-function botChoice(g,p){
- const opts=options(g),h=g.hands[p],strength=s=>h.filter(id=>id[0]===s).reduce((n,id)=>n+Math.max(0,card(id).rank-9),0)+h.filter(id=>id[0]===s).length*2;
- const trump=SUITS.slice().sort((a,b)=>strength(b)-strength(a))[0];
- if(opts.includes('koz')&&(strength(trump)>=15||opts.length===1))return {type:'koz',trump};
- const risk=t=>h.reduce((n,id)=>n+(penalty(id,t)?card(id).rank:0)+Math.max(0,card(id).rank-10)*(t==='el'||t==='son'?3:0),0)+(t==='rifki'&&h.includes('H13')?50:0);
- const penalties=opts.filter(t=>t!=='koz');return {type:penalties.sort((a,b)=>risk(a)-risk(b))[0]||'koz',trump};
-}
-// The bot receives only its own hand and public trick/history, never opponents' hands.
-function botCard(view){
- const ids=view.legal.slice(),type=view.contract;
- if(!view.trick.length)return ids.sort((a,b)=>type==='koz'?card(b).rank-card(a).rank:card(a).rank-card(b).rank)[0];
- const wins=id=>winner([...view.trick,{player:view.player,card:id}],view.trump)===view.player;
- if(type==='koz'){const winning=ids.filter(wins);return (winning.length?winning:ids).sort((a,b)=>card(a).rank-card(b).rank)[0];}
- const safe=ids.filter(id=>!wins(id));return (safe.length?safe:ids).sort((a,b)=>safe.length?(Number(penalty(b,type))-Number(penalty(a,type))||card(b).rank-card(a).rank):card(a).rank-card(b).rank)[0];
-}
-module.exports={TYPES,SUITS,card,deck,create,deal,choose,options,legal,play,advance,next,winner,botChoice,botCard};
+function botChoice(g,p){return require('./bots').chooseContract(require('./bots/view').fromGame(g,p));}
+function botCard(view){return require('./bots').chooseCard(view);}
+module.exports={TYPES,SUITS,card,deck,create,deal,choose,options,legal,play,advance,next,winner,penalty,botChoice,botCard};
