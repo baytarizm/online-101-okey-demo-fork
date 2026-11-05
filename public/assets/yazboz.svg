@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Yazboz: Kupa Papazı ve kırmızı 13 okey taşı">
+<rect x="4" y="4" width="504" height="504" rx="96" fill="#123d33"/>
+<path d="M48 379c122 66 276 66 416-5" fill="none" stroke="#73917a" stroke-opacity=".18" stroke-width="2"/>
+<g transform="translate(42 61) rotate(-10 134 193)">
+ <svg width="280" height="386" viewBox="0 0 512 512" preserveAspectRatio="none">
+<defs>
+ <path id="heart" d="M0 7C-21-8-13-24 0-15 13-24 21-8 0 7Z"/>
+ <g id="king">
+  <path d="M145 255v-54l46-24h130l46 24v54Z" fill="#a52d37"/>
+  <path d="m145 203 59-25 18 77h-42Zm222 0-59-25-18 77h42Z" fill="#1c5365"/>
+  <path d="m211 189 45 31 45-31-7 66h-76Z" fill="#e7bf67"/>
+  <path d="M221 189v-30h70v30l-35 26Z" fill="#f3d7ae" stroke="#2c3432" stroke-width="3"/>
+  <path d="M206 116q-6 36 5 59l18 13v-56Zm100 0q6 36-5 59l-18 13v-56Z" fill="#353531"/>
+  <path d="M222 110h68v48q-8 31-34 37-26-6-34-37Z" fill="#f6dcb7" stroke="#303b38" stroke-width="3"/>
+  <path d="m221 118 19-2m32 0 19 2M234 130h8m28 0h8" stroke="#263631" stroke-width="4" stroke-linecap="round"/>
+  <path d="m255 132-5 20h11m-20 12q15-5 30 0m-34 4q19 20 38 0l-19 25Z" fill="#4b3d31" stroke="#4b3d31" stroke-width="2"/>
+  <path d="M209 111V91l-8-31 28 14 27-29 27 29 28-14-8 31v20Z" fill="#e8bd61" stroke="#4b4631" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M211 92h90v18h-90Z" fill="#a22c36"/>
+  <circle cx="229" cy="101" r="4" fill="#e8bd61"/><circle cx="256" cy="101" r="5" fill="#e8bd61"/><circle cx="283" cy="101" r="4" fill="#e8bd61"/>
+  <path d="m164 213 25 28m-15-38 28 34m146-24-25 28m15-38-28 34" stroke="#e9c374" stroke-width="4"/>
+  <use href="#heart" x="256" y="246" fill="#a52d37" transform="translate(128 122) scale(.5)"/>
+  <path d="m208 193 15 62m81-62-15 62" stroke="#f9ebbf" stroke-width="5"/>
+  <path d="M160 199V90m-8 0h16m-8-14v14" stroke="#c5a355" stroke-width="7" stroke-linecap="round"/>
+  <path d="M143 235q11-19 23-11l9 31h-32" fill="#f5d6aa" stroke="#2e3c37" stroke-width="3"/>
+ </g>
+</defs>
+<rect x="8" y="8" width="496" height="496" rx="64" fill="#fffdf6" stroke="#d7d4c6" stroke-width="8"/>
+<rect x="132" y="33" width="248" height="446" rx="9" fill="#fbf3df" stroke="#a93440" stroke-width="4"/>
+<use href="#king"/>
+<use href="#king" transform="rotate(180 256 256)"/>
+<path d="M145 256h222" stroke="#f6e7bc" stroke-width="4"/>
+<g fill="#ae2637" font-family="Georgia,serif" font-weight="700" text-anchor="middle">
+ <text x="74" y="103" font-size="73">K</text><use href="#heart" transform="translate(74 145) scale(1.8)"/>
+ <g transform="rotate(180 256 256)"><text x="74" y="103" font-size="73">K</text><use href="#heart" transform="translate(74 145) scale(1.8)"/></g>
+</g>
+</svg>
+</g>
+<g transform="translate(263 129) rotate(11 105 154)">
+ <rect x="-7" y="0" width="224" height="332" rx="29" fill="#09271f" fill-opacity=".25"/>
+ <rect x="0" y="8" width="214" height="318" rx="25" fill="#c7bda9"/>
+ <rect width="214" height="312" rx="25" fill="#fffaf0" stroke="#ece3cf" stroke-width="3"/>
+ <rect x="9" y="9" width="196" height="290" rx="19" fill="none" stroke="#fff" stroke-width="2"/>
+ <text x="105" y="197" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="149" font-weight="700" letter-spacing="-11" fill="#ba2539">13</text>
+ <circle cx="107" cy="242" r="12" fill="#ba2539"/>
+</g>
+</svg>
