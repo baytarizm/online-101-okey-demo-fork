@@ -36,5 +36,5 @@ function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=p
  });
  server.on('close',()=>{clearInterval(sweep);for(const t of timers.values())clearTimeout(t);});return {app,server,io,rooms};
 }
-if(require.main===module){const {server}=createGameServer();server.listen(Number(process.env.PORT||3000),'0.0.0.0',()=>console.log('HAYSAG KING hazır.'));process.on('SIGTERM',()=>{server.close();setTimeout(()=>process.exit(0),2000).unref();});}
+if(require.main===module){const {server}=createGameServer();const portArg=process.argv.indexOf('--port');const port=Number(process.env.PORT||(portArg>=0?process.argv[portArg+1]:3000));if(!Number.isInteger(port)||port<1||port>65535)throw Error('Geçersiz port.');server.listen(port,'0.0.0.0',()=>console.log('HAYSAG KING hazır.'));process.on('SIGTERM',()=>{server.close();setTimeout(()=>process.exit(0),2000).unref();});}
 module.exports={createGameServer};
