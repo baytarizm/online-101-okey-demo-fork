@@ -1,7 +1,7 @@
 {
-  "name": "haysag-okey",
-  "version": "2.0.0",
-  "description": "HAYSAG OKEY: davet koduyla dört kişilik online 101",
+  "name": "haysag-king",
+  "version": "3.0.0",
+  "description": "Yazboz King / Rıfkı: botlarla ve özel masalarda çevrim içi kart oyunu",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
@@ -13,8 +13,8 @@
     "socket.io": "^4.7.2"
   },
   "keywords": [
-    "okey",
-    "game",
+    "king",
+    "rifki",
     "multiplayer"
   ],
   "author": "",
