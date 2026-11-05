@@ -7,7 +7,7 @@ function knowledge(view,{limited=false}={}){
  if(!limited)for(const x of played)if(x.lead&&x.card[0]!==x.lead)voids[x.player].add(x.lead);
  // Current public trick also works for callers that have not yet appended their event log.
  const lead=view.trick?.[0]?.card[0];if(!limited&&lead)for(const x of view.trick)if(x.card[0]!==lead)voids[x.player].add(lead);
- const unseen=K.deck().filter(id=>!own.has(id)&&!seen.has(id)),counts=view.cardCounts?.slice()||[0,0,0,0];
+ const unseen=K.deck().filter(id=>!own.has(id)&&!seen.has(id)),counts=view.cardCounts?.slice()||Array.from({length:4},(_,p)=>p===view.player?view.hand.length:13-played.filter(x=>x.player===p).length-(view.trick||[]).filter(x=>x.player===p&&!played.some(y=>y.card===x.card)).length);
  const probabilities={};
  for(const id of unseen){const weights=counts.map((n,p)=>p===view.player||voids[p].has(id[0])?0:n);const total=weights.reduce((a,b)=>a+b,0);probabilities[id]=weights.map(n=>total?n/total:0);}
  // Iterative proportional fitting: exact zero constraints, normalized card rows and capacity margins.
