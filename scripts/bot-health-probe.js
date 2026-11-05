@@ -1,0 +1,9 @@
+'use strict';
+const http=require('node:http');const {fork}=require('node:child_process');const {performance}=require('node:perf_hooks');
+class HealthProbe{
+ constructor(){this.child=null;this.stopping=null;}
+ start(port){this.child=fork(__filename,[],{stdio:['ignore','ignore','inherit','ipc']});return new Promise((resolve,reject)=>{this.child.once('error',reject);this.child.on('message',message=>{if(message.type==='ready')resolve();});this.child.send({type:'start',port});});}
+ stop(){if(this.stopping)return this.stopping;if(!this.child)return Promise.resolve({times:[],errors:0});this.stopping=new Promise((resolve,reject)=>{const child=this.child,timer=setTimeout(()=>{child.kill();reject(Error('Health probe stop timeout'));},10000);child.on('message',message=>{if(message.type==='done'){clearTimeout(timer);resolve(message.data);}});if(child.connected)child.send({type:'stop'});else{clearTimeout(timer);resolve({times:[],errors:1});}});return this.stopping;}
+}
+if(require.main===module){let timer=null,pending=[],times=[],errors=0;process.on('message',async message=>{if(message.type==='start'){const port=Number(message.port);if(!Number.isInteger(port)||port<1||port>65535)throw Error('Invalid probe port');timer=setInterval(()=>{const start=performance.now();pending.push(new Promise(resolve=>{const request=http.get({host:'127.0.0.1',port,path:'/health',agent:false},response=>{response.resume();response.on('end',()=>{times.push(performance.now()-start);resolve();});});request.setTimeout(3000,()=>request.destroy());request.on('error',()=>{errors++;resolve();});}));},30);process.send({type:'ready'});}else if(message.type==='stop'){clearInterval(timer);await Promise.all(pending);process.send({type:'done',data:{times,errors}},()=>process.disconnect());}});process.on('disconnect',()=>clearInterval(timer));}
+module.exports={HealthProbe};

@@ -1,9 +1,9 @@
 'use strict';
 const express=require('express');const http=require('node:http');const crypto=require('node:crypto');const path=require('node:path');const fs=require('node:fs');const {Server}=require('socket.io');const K=require('./king');
-const Bots=require('./bots');const {BotRunner}=require('./bots/runner');const {fromGame:botView}=require('./bots/view');
+const Bots=require('./bots');const {BotPool}=require('./bots/pool');const {fromGame:botView}=require('./bots/view');
 const hash=v=>crypto.createHash('sha256').update(v).digest('hex');
-function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=process.env.STATE_FILE,roomTtl=30*60_000,maxRooms=100,maxRoomsPerIp=10}={}){
- const botRunner=new BotRunner();
+function createGameServer({botDelay=850,trickDelay=1500,turnMs=30000,stateFile=process.env.STATE_FILE,roomTtl=30*60_000,maxRooms=100,maxRoomsPerIp=10,botWorkers=process.env.BOT_WORKERS||1}={}){
+ const botRunner=new BotPool({size:botWorkers});
  const app=express(),server=http.createServer(app),io=new Server(server,{maxHttpBufferSize:4096}),rooms=new Map(),timers=new Map();
  const origin=new URL(process.env.YAZBOZ_ORIGIN||'https://yazbozhaysag.vercel.app').origin;
  app.disable('x-powered-by');app.use((req,res,next)=>{res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Content-Security-Policy',`default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' ws: wss:; frame-ancestors 'self' ${origin}; base-uri 'none'; form-action 'self'`);next();});

@@ -1,0 +1,3 @@
+'use strict';
+const {test}=require('node:test');const assert=require('node:assert/strict');const http=require('node:http');const {HealthProbe}=require('../scripts/bot-health-probe');
+test('independent health producer reaches local server and stops idempotently',async()=>{const server=http.createServer((req,res)=>res.end('ok'));await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const probe=new HealthProbe();try{await probe.start(server.address().port);await new Promise(resolve=>setTimeout(resolve,120));const data=await probe.stop();assert.ok(data.times.length>=2);assert.equal(data.errors,0);assert.deepEqual(await probe.stop(),data);}finally{await probe.stop();await new Promise(resolve=>server.close(resolve));}});
