@@ -42,3 +42,87 @@
  .bottom-tools{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:10px 0}
  .bottom-tools button{font-size:11px;padding:7px 9px}
 }
+
+/* Table menu, separate player lanes and traditional overlapping cards. */
+header{gap:10px}.tools{gap:7px}.exit-button{border-color:#e5bf7655;color:var(--gold)}
+.seat-box{min-width:0;max-width:none;width:136px;gap:7px;padding:8px 10px;border-radius:16px}
+.seat-box.top,.seat-box.self{width:154px}.seat-name{font-size:11px;max-width:92px}.seat-box small{font-size:9px;white-space:nowrap}.seat-box .avatar{width:30px;height:30px}.seat-box b{font-size:13px}
+.you-mark{font-size:8px;color:var(--muted);margin-left:3px}.seat-box.left,.seat-box.right{top:50%;transform:translateY(-50%)}.seat-box.left{left:-8px}.seat-box.right{right:-8px}
+.arena{height:330px;border-radius:100px;isolation:isolate}.trick{inset:58px 150px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:center;justify-items:center;gap:8px;z-index:1}
+.trick .table-hint{grid-column:1/-1}.trick .played{min-width:0;animation:arrive .2s ease}.trick .played small{display:none}.trick .card.art-card{width:66px;height:96px}
+.card.art-card{position:relative;display:block;flex:none;padding:0;overflow:hidden;aspect-ratio:169.075/244.64;border:1px solid #c8c5b9;border-radius:7px;background:#fff;color:#15191b;box-shadow:0 3px 9px #0005;line-height:normal}
+.card-art{display:block;width:100%;height:100%;pointer-events:none}.art-card.legal{border:1px solid var(--gold);box-shadow:0 0 0 2px var(--gold),0 4px 10px #0005}
+.grouped-hand{display:flex;flex-direction:column;max-width:790px;gap:0;padding:0 12px 6px}
+.hand-row{position:relative;display:flex;align-items:flex-start;isolation:isolate;justify-content:center;gap:0;width:100%;padding:14px 5px 6px;min-height:0}
+.hand-slot{position:relative;display:block;flex:1 1 0;max-width:64px;min-width:0;height:140px}
+.hand-slot:last-child{flex:0 0 96px;max-width:none}.hand-slot.suit-start{margin-left:8px}
+.grouped-hand .card.art-card{position:absolute;left:0;top:0;flex:none;width:96px;height:139px;padding:0;transform-origin:50% 100%;transform:translateY(var(--lift,0px)) rotate(var(--tilt,0deg));transition:transform .15s,box-shadow .15s}
+.grouped-hand .card:disabled,.choosing-hand .card:disabled{opacity:1}
+.grouped-hand .card:hover:not(:disabled),.grouped-hand .card:focus-visible{transform:translateY(calc(var(--lift,0px) - 12px)) rotate(var(--tilt,0deg));background:#fff}
+.hand-slot:hover,.hand-slot:focus-within{z-index:20}.hand-row+.hand-row{margin-top:-28px}
+.arena.has-picker,.arena.choosing.has-picker{height:358px;max-width:640px}
+.contract-picker{position:absolute;inset:0;z-index:5;overflow:auto;padding:18px;background:#f5f6f2;color:#252e29;border:1px solid #e5bf7677;border-radius:25px;box-shadow:0 16px 45px #0006;outline-offset:3px}
+.picker-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.picker-heading h3{font:700 17px system-ui;margin:0}.picker-heading>span{font-size:11px;color:#748078}
+.contract-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.contract-tile{display:flex;align-items:center;gap:12px;padding:10px 13px;min-height:58px;border:1px solid #dce1dc;background:#fafbf8;color:#29322c;border-radius:18px;text-align:left}
+.contract-tile:hover:not(:disabled){background:#e9eee6;border-color:#9baa9e}
+.contract-tile:disabled{opacity:.38}.contract-symbol{flex:0 0 37px;text-align:center;font:700 31px Georgia,serif;color:#77817a}.contract-symbol.red,.trump-suits .red{color:#da3b51}
+.contract-label{min-width:0}.contract-label strong{display:block;font-size:14px;font-weight:700}.contract-label small{display:block;font-size:11px;color:#828b84;margin-top:3px}
+.trump-suits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}.trump-suits[hidden]{display:none}
+.trump-suits button{padding:6px 2px;border-color:#d4dcd2;background:#fff;color:#2c352e;border-radius:12px}.trump-suits span{display:block;font:25px Georgia,serif}.trump-suits small{display:block;font-size:10px}
+.exit-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.art-credit{font-size:11px}
+@media(max-width:800px){
+ header{padding:10px 12px}.brand{gap:7px}.brand-logo{width:30px;height:30px}.brand span{font-size:14px;letter-spacing:1.8px}.brand small{font-size:8px;letter-spacing:2px}
+ .tools{gap:5px}.tools button{font-size:10px;padding:8px}.tools>a{display:none}
+ main{padding:12px 10px 18px}.table-top h2{font-size:23px}.table-top .eyebrow{font-size:9px}
+ .arena,.arena.choosing{height:280px;margin:22px 5px 0;border-radius:70px}
+ .seat-box{width:86px;padding:7px 5px;gap:4px;flex-wrap:wrap;justify-content:center;border-radius:14px}
+ .seat-box .avatar{width:25px;height:25px}.seat-box>div{flex:1;min-width:0}
+ .seat-box.top,.seat-box.self{width:132px;flex-wrap:nowrap;padding:7px 9px}
+ .seat-box.top{top:-12px}.seat-box.self{bottom:-12px}
+ .seat-box.left,.arena.choosing .seat-box.left{left:-5px;top:50%;transform:translateY(-50%)}
+ .seat-box.right,.arena.choosing .seat-box.right{right:-5px;top:50%;transform:translateY(-50%)}
+ .seat-name{font-size:10px;max-width:78px;line-height:1.3}.seat-box.left .seat-name,.seat-box.right .seat-name{font-size:9px;max-width:49px}
+ .seat-box small{font-size:8px;margin-top:2px}.seat-box b{font-size:11px;margin-left:0}.seat-box.left b,.seat-box.right b{width:100%;text-align:center}
+ .trick,.arena.choosing .trick{inset:48px 87px;display:grid;gap:5px}
+ .trick .card.art-card{width:52px;height:76px}.trick .table-hint{font-size:13px}.status-line{font-size:11px;margin-top:15px;padding:7px 0;min-height:30px}
+ .grouped-hand{max-width:540px;gap:0;padding:0 5px 8px}
+ .hand-row{gap:0;padding:13px 3px 3px}
+ .hand-slot{height:124px;max-width:44px}.hand-slot:last-child{flex-basis:84px}.hand-slot.suit-start{margin-left:7px}
+ .grouped-hand .card.art-card{width:84px;height:122px;padding:0}
+ .hand-row+.hand-row{margin-top:-28px}
+ .arena.has-picker,.arena.choosing.has-picker{height:342px;margin:14px 2px 0;border:none;border-radius:23px}
+ .contract-picker{padding:13px;border-radius:23px}
+ .picker-heading{margin-bottom:10px}.picker-heading h3{font-size:15px}.picker-heading>span{font-size:10px}
+ .contract-grid{gap:7px}.contract-tile{min-height:57px;padding:9px;gap:8px;border-radius:17px}
+ .contract-symbol{font-size:28px;flex-basis:32px}.contract-label strong{font-size:13px}.contract-label small{font-size:10px}
+ .has-picker:has(.trump-suits:not([hidden])){height:403px}
+ .bottom-tools{margin:4px 0}.bottom-tools button{font-size:10px;padding:7px 8px}
+}
+@media(max-width:350px){.brand small{display:none}.brand span{font-size:12px}.tools button{padding:7px 6px}.trick,.arena.choosing .trick{inset-inline:80px}.seat-box{width:78px}.trick .card.art-card{width:44px;height:64px}.contract-symbol{flex-basis:27px}.contract-label strong{font-size:12px}}
+.fan-m12{--tilt:-7.800000000000001deg;--lift:10px}
+.fan-m11{--tilt:-7.15deg;--lift:8px}
+.fan-m10{--tilt:-6.5deg;--lift:7px}
+.fan-m9{--tilt:-5.8500000000000005deg;--lift:6px}
+.fan-m8{--tilt:-5.2deg;--lift:4px}
+.fan-m7{--tilt:-4.55deg;--lift:3px}
+.fan-m6{--tilt:-3.9000000000000004deg;--lift:3px}
+.fan-m5{--tilt:-3.25deg;--lift:2px}
+.fan-m4{--tilt:-2.6deg;--lift:1px}
+.fan-m3{--tilt:-1.9500000000000002deg;--lift:1px}
+.fan-m2{--tilt:-1.3deg;--lift:0px}
+.fan-m1{--tilt:-0.65deg;--lift:0px}
+.fan-p0{--tilt:0deg;--lift:0px}
+.fan-p1{--tilt:0.65deg;--lift:0px}
+.fan-p2{--tilt:1.3deg;--lift:0px}
+.fan-p3{--tilt:1.9500000000000002deg;--lift:1px}
+.fan-p4{--tilt:2.6deg;--lift:1px}
+.fan-p5{--tilt:3.25deg;--lift:2px}
+.fan-p6{--tilt:3.9000000000000004deg;--lift:3px}
+.fan-p7{--tilt:4.55deg;--lift:3px}
+.fan-p8{--tilt:5.2deg;--lift:4px}
+.fan-p9{--tilt:5.8500000000000005deg;--lift:6px}
+.fan-p10{--tilt:6.5deg;--lift:7px}
+.fan-p11{--tilt:7.15deg;--lift:8px}
+.fan-p12{--tilt:7.800000000000001deg;--lift:10px}
