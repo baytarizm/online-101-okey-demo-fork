@@ -1,5 +1,6 @@
 'use strict';
 const {performance}=require('node:perf_hooks');const K=require('../king');const Legacy=require('./legacy');const H=require('./heuristic');const {knowledge}=require('./information');
+const Tactics=require('./tactics');
 function shuffled(values,random){const a=values.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function determinize(view,info,random=Math.random){
  const slots=[];for(let p=0;p<4;p++)if(p!==view.player)for(let i=0;i<info.counts[p];i++)slots.push(p);
@@ -26,6 +27,8 @@ function rollout(view,hands,id,deadline,now){const g=simulation(view,hands);K.pl
 function search(view,{samples=24,budgetMs=35,random=Math.random,now=()=>performance.now()}={}){
  const start=now(),deadline=start+Math.max(0,Math.min(100,Number(budgetMs)||0));
  const info=knowledge(view),ranked=H.rankCards(view,{info}),fallback=ranked[0]?.card;
+ const equivalent=Tactics.equivalentWinner(view);
+ if(equivalent)return {card:equivalent,samples:0,attempted:0,candidates:ranked.map(r=>({...r,meanScore:null,searchUtility:r.utility})),elapsedMs:now()-start,reason:'equivalent-winner'};
  const maxSamples=Math.max(0,Math.min(256,Math.floor(Number(samples)||0))),totals=new Map(view.legal.map(id=>[id,0]));let completed=0,attempted=0;
  const leader=(view.scores||[0,0,0,0]).indexOf(Math.max(...(view.scores||[0,0,0,0])));
  for(let sample=0;sample<maxSamples&&now()<deadline;sample++){
@@ -43,3 +46,4 @@ function search(view,{samples=24,budgetMs=35,random=Math.random,now=()=>performa
  return {card:completed?candidates[0].card:fallback,samples:completed,attempted,candidates,elapsedMs:now()-start};
 }
 module.exports={determinize,simulation,rollout,search};
+
