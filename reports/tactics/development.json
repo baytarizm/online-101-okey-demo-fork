@@ -1,0 +1,140 @@
+{
+  "seed": 62001,
+  "matches": 200,
+  "roundsPerVersion": 4000,
+  "difficulty": "medium",
+  "opponent": "legacy",
+  "settings": {},
+  "before": {
+    "matches": 200,
+    "rounds": 4000,
+    "averageScore": 348.15,
+    "averagePenaltyPerMatch": 976.6,
+    "winRate": 0.815,
+    "illegal": 0,
+    "decisionMs": {
+      "p50": 0.03523500000005697,
+      "p95": 0.1879349999999249,
+      "max": 5.734991999999693
+    },
+    "byContract": {
+      "el": -137.375,
+      "kupa": -73.125,
+      "kiz": -83.25,
+      "erkek": -107.1,
+      "rifki": -67.2,
+      "son": -20.25,
+      "koz": 165.59375
+    }
+  },
+  "after": {
+    "matches": 200,
+    "rounds": 4000,
+    "averageScore": 356.2,
+    "averagePenaltyPerMatch": 968.55,
+    "winRate": 0.835,
+    "illegal": 0,
+    "decisionMs": {
+      "p50": 0.029403000000002066,
+      "p95": 0.17944700000043667,
+      "max": 3.421220000000176
+    },
+    "byContract": {
+      "el": -137.375,
+      "kupa": -73.05,
+      "kiz": -85,
+      "erkek": -106.8,
+      "rifki": -67.2,
+      "son": -14.85,
+      "koz": 165.59375
+    }
+  },
+  "firstPlaceShare": {
+    "before": 0.4875,
+    "after": 0.495
+  },
+  "pairedScoreGain": {
+    "n": 200,
+    "mean": 8.05,
+    "confidence": 0.95,
+    "ci": [
+      -5.9,
+      22.05
+    ]
+  },
+  "pairedPenaltyReduction": {
+    "n": 200,
+    "mean": 8.05,
+    "confidence": 0.95,
+    "ci": [
+      -5.9,
+      22.05
+    ]
+  },
+  "byContract": {
+    "el": {
+      "n": 200,
+      "mean": 0,
+      "confidence": 0.95,
+      "ci": [
+        0,
+        0
+      ]
+    },
+    "kupa": {
+      "n": 200,
+      "mean": 0.075,
+      "confidence": 0.95,
+      "ci": [
+        -0.975,
+        1.35
+      ]
+    },
+    "kiz": {
+      "n": 200,
+      "mean": -1.75,
+      "confidence": 0.95,
+      "ci": [
+        -5,
+        1
+      ]
+    },
+    "erkek": {
+      "n": 200,
+      "mean": 0.3,
+      "confidence": 0.95,
+      "ci": [
+        0,
+        0.75
+      ]
+    },
+    "rifki": {
+      "n": 200,
+      "mean": 0,
+      "confidence": 0.95,
+      "ci": [
+        0,
+        0
+      ]
+    },
+    "son": {
+      "n": 200,
+      "mean": 5.4,
+      "confidence": 0.95,
+      "ci": [
+        -0.9,
+        12.6
+      ]
+    },
+    "koz": {
+      "n": 200,
+      "mean": 0,
+      "confidence": 0.95,
+      "ci": [
+        0,
+        0
+      ]
+    }
+  },
+  "note": "Paired seeds and rotating candidate seat. Bootstrap resamples whole matches. winRate is score >=0; firstPlaceShare splits tied first places. Timing is measured locally, not a mobile or production benchmark."
+}

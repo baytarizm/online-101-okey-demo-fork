@@ -1,5 +1,6 @@
 'use strict';
 const K=require('../king');const Legacy=require('./legacy');const {knowledge}=require('./information');
+const Tactics=require('./tactics');
 const rank=id=>Number(id.slice(1));const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
 function probAny(ids,p,info){let none=1;for(const id of ids)none*=1-(info.probabilities[id]?.[p]||0);return 1-none;}
 function riskFeatures(view,id,info){
@@ -50,10 +51,10 @@ function rankCards(view,{info=knowledge(view)}={}){
   }else{
    utility=-features.expectedPenalty;
    // Void creation and high-card shedding matter only when this is a relatively safe trick.
-   utility+=danger*(type==='el'?27:type==='son'?((view.trickNo||0)<10?50:12):18)*(safe+.15);
+   utility+=danger*(type==='el'?27:type==='son'?((view.trickNo||0)<11?50:12):18)*(safe+.15);
    if(K.penalty(id,type))utility+=safe*(type==='rifki'?270:Math.abs(K.TYPES[type].rate)*.85);
    if(!view.trick.length&&length===1&&suit!=='H')utility+=4*safe;
-   if(type==='son'&&(view.trickNo||0)<10){utility+=r*1.4;utility-=r<=6?8:0;}
+   if(type==='son'&&(view.trickNo||0)<11){utility+=r*2;utility-=r<=6?8:0;}
    if(type==='el'&&view.trick.length===3&&features.expectedPenalty===0)utility+=r;
    if(type==='rifki'){
     const hearts=hand.filter(c=>c[0]==='H').length;
@@ -70,11 +71,13 @@ function rankCards(view,{info=knowledge(view)}={}){
     }
    }
   }
-  return {card:id,utility,...features};
+  const tacticalBonus=type==='koz'?0:Tactics.bonus(view,id,info,features);utility+=tacticalBonus;
+  return {card:id,utility,tacticalBonus,...features};
  }).sort((a,b)=>b.utility-a.utility||view.legal.indexOf(a.card)-view.legal.indexOf(b.card));
 }
 function chooseCard(view){
  if(view.legal.length===1)return view.legal[0];
+ const equivalent=Tactics.equivalentWinner(view);if(equivalent)return equivalent;
  if(view.contract==='koz'){
   // Do not sacrifice a currently winning follow card merely because later players might beat it.
   if(view.trick.length)return Legacy.chooseCard(view);
@@ -89,3 +92,4 @@ function chooseCard(view){
  return rankCards(view)[0]?.card;
 }
 module.exports={rankCards,chooseCard,riskFeatures};
+
